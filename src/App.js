@@ -1,3 +1,6 @@
+
+// my name is mariam
+
 import React from "react";
 
 class App extends React.Component {
