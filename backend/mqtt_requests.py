@@ -1,0 +1,1 @@
+#create a client for each tab-topic and prepare the dictionary
