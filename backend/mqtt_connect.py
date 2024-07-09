@@ -1,6 +1,8 @@
 #enter the information and configure the mqtt connection for the current account
+import globals
 import json_parser
 import paho.mqtt.client as mqtt
+from mqtt_requests import extract_topic
 
 def on_subscribe(client, userdata, mid, reason_code_list, properties):
     # Since we subscribed only for a single channel, reason_code_list contains
@@ -19,32 +21,16 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
         print(f"Broker replied with failure: {reason_code_list[0]}")
     client.disconnect()
 
-# def on_message(client, userdata, message):
-#     # userdata is the structure we choose to provide, here it's a list()
-#     userdata.append(message.payload)
-#     # We only want to process 10 messages
-#     if len(userdata) >= 20:
-#         client.unsubscribe("$SYS/#")
-topics = []
+
 
 def on_message(client, userdata, message):
     topic = message.topic
     payload = message.payload.decode('utf-8')  # Decode payload if it's a string
     dict = {}
     json_parser.parseJSON(payload, dict)
-    #print(f"Received message on topic {topic}: {dict.items()} ")
-    # print(f"Received message on topic {topic}")
-    if json_parser.topic_contains(topic,topics) == False:
-        topics.append(topic)
-
-    print()
-    # c = json_parser.contains(topic, topics)
-    # print(c)
-   # print(topics)
-    # if topic in userdata: userdata[topic] = dict.items()
-    # else: 
-    #     userdata.append((topic, dict.items()))
-
+    #Debugging: print(f"Received message on topic {topic}: {dict.items()} ")
+    if globals.topic_contains(topic, globals.topics) == False:
+        globals.topics.append(topic)
     for i, (t, _) in enumerate(userdata):
         if t == topic:
             userdata[i] = (topic, dict)
@@ -52,8 +38,9 @@ def on_message(client, userdata, message):
     else:
         userdata.append((topic, dict))
 
-    if len(topics) >= 3:
-       client.unsubscribe("#")
+    extract_topic(userdata)
+    if len(globals.topics) >= 3:
+        client.unsubscribe("#")
 
 
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -74,6 +61,5 @@ mqttc.on_unsubscribe = on_unsubscribe
 mqttc.user_data_set([])
 mqttc.username_pw_set("aria", "A?fB)N9)Ew'25C5Y")
 mqttc.connect("www.ariatechnologies-iiot.com", 1883, 60)
-# mqttc.loop_start()
 mqttc.loop_forever()
-#print(f"Received the following message: {mqttc.user_data_get()}")
+#Debugging: print(f"Received the following message: {mqttc.user_data_get()}")
