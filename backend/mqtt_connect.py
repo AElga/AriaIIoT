@@ -3,6 +3,8 @@ import globals
 import json_parser
 import paho.mqtt.client as mqtt
 from mqtt_requests import extract_topic
+from flask_socketio import emit
+import app
 
 def on_subscribe(client, userdata, mid, reason_code_list, properties):
     # Since we subscribed only for a single channel, reason_code_list contains
@@ -28,7 +30,8 @@ def on_message(client, userdata, message):
     payload = message.payload.decode('utf-8')  # Decode payload if it's a string
     dict = {}
     json_parser.parseJSON(payload, dict)
-    #Debugging: print(f"Received message on topic {topic}: {dict.items()} ")
+    #Debugging: 
+    # print(f"Received message on topic {topic}: {dict.items()} ")
     if globals.topic_contains(topic, globals.topics) == False:
         globals.topics.append(topic)
     for i, (t, _) in enumerate(userdata):
@@ -39,8 +42,13 @@ def on_message(client, userdata, message):
         userdata.append((topic, dict))
 
     extract_topic(userdata)
-    if len(globals.topics) >= 3:
-        client.unsubscribe("#")
+
+    app.send_update({'topic': topic, 'data': dict})
+
+    
+
+    # if len(globals.topics) >= 3:
+    #     client.unsubscribe("#")
 
 
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -61,5 +69,6 @@ mqttc.on_unsubscribe = on_unsubscribe
 mqttc.user_data_set([])
 mqttc.username_pw_set("aria", "A?fB)N9)Ew'25C5Y")
 mqttc.connect("www.ariatechnologies-iiot.com", 1883, 60)
-mqttc.loop_forever()
+mqttc.loop_start()
+# loop forever msh btshtaghal
 #Debugging: print(f"Received the following message: {mqttc.user_data_get()}")
