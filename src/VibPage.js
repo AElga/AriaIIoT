@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-
+import NavBar from './NavBar';
 class VibPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiResponse: "",
+      apiResponse: {},
       messages: [],
     };
     this.callAPI = this.callAPI.bind(this);
@@ -14,7 +14,7 @@ class VibPage extends Component {
   callAPI() {
     fetch("http://localhost:5000/test1")
       .then((res) => res.text())
-      .then((res) => this.setState({ apiResponse: res }))
+      .then((res) => this.setState({ apiResponse: JSON.parse(res)}))
       .catch((err) => console.error("Fetch error: ", err));
   }
 
@@ -47,17 +47,18 @@ class VibPage extends Component {
 
     return (
       <div className="VIB">
+        <NavBar></NavBar>
         <header className="VIB-header">
-          <h1>Vib measurements</h1>
-          <p>{apiResponse}</p>
-          
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                Topic: {msg.topic}, Data: {JSON.stringify(msg.data)}
-              </li>
-            ))}
-          </ul>
+          <h1>Predicitve Maintenance</h1>
+          {/* {Object.keys(apiResponse).map((key) => (
+              <p key={key}>{key}: {apiResponse[key]}</p>
+            ))} */}
+          <p>Motor Temperature: {apiResponse.Temperature_C_1} C</p>
+          <p>Pump Temperature: {apiResponse.Temperature_C_2} C</p>
+          <p>Motor RMS Velocity On X-axis: {apiResponse.X_axis_RMS_Velocity_mmPerSec_1} mm/sec</p>
+          <p>Pump RMS Velocity On X-axis: {apiResponse.X_axis_RMS_Velocity_mmPerSec_2} mm/sec</p>
+          <p>Motor RMS Velocity On Z-axis: {apiResponse.Z_axis_RMS_Velocity_mmPerSec_1} mm/sec</p>
+          <p>Pump RMS Velocity On Z-axis: {apiResponse.Z_axis_RMS_Velocity_mmPerSec_2} mm/sec</p>
         </header>
       </div>
     );

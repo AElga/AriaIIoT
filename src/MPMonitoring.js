@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-
+import NavBar from './NavBar';
 class MPMonitoring extends Component {
   constructor(props) {
     super(props);
@@ -46,18 +46,12 @@ class MPMonitoring extends Component {
     const { apiResponse, messages } = this.state;
 
     return (
+      
       <div className="MP">
+        <NavBar></NavBar>
         <header className="MP-header">
           <h1>MP measurements</h1>
           <p>{apiResponse}</p>
-          
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                Topic: {msg.topic}, Data: {JSON.stringify(msg.data)}
-              </li>
-            ))}
-          </ul>
         </header>
       </div>
     );

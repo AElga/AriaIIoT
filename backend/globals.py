@@ -8,6 +8,7 @@ def topic_contains(s, list):
 
 def get_value(topic, key):
     # check if key is in the topic or no
-    
     dict = topic.get_dict()
+    if dict.get(key) == None:
+        return ""
     return dict.get(key)

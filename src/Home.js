@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import ariaLogo from './ariaLogo.png';
+import NavBar from './NavBar';
 
 class Home extends Component {
   constructor(props) {
@@ -7,34 +11,26 @@ class Home extends Component {
   }
 
   render() {
-    // let navigate = useNavigate();
-    // const routeChangeLogin = () => {
-    //     let LoginPath = newPath;
-    //     navigate(LoginPath);
-    // }
-    // const routeChangeRegister = () => {
-    //     let registerPath = newPath;
-    //     navigate(registerPath);
-    // }
+
 
     return (
-      <React.Fragment>
-        <Link to="Vib">
-          <button type="button" >
-            Go to Vib
-          </button>
-        </Link>
-        <Link to="Energy">
-          <button type="button" >
-            Go to Energy
-          </button>
-        </Link>
-        <Link to="MP">
-          <button type="button" >
-            Go to MP
-          </button>
-        </Link>
-      </React.Fragment>
+      <NavBar></NavBar>
+      //   <Link to="Vib">
+      //     <button type="button" >
+      //       Go to Vib
+      //     </button>
+      //   </Link>
+      //   <Link to="Energy">
+      //     <button type="button" >
+      //       Go to Energy
+      //     </button>
+      //   </Link>
+      //   <Link to="MP">
+      //     <button type="button" >
+      //       Go to MP
+      //     </button>
+      //   </Link>
+      // </React.Fragment>
     );
   }
 }

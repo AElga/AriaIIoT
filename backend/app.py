@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 import mqtt_connect
+from topic_data import TopicData
 
 app = Flask(__name__)
 CORS(app)
@@ -11,18 +12,25 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/test1')
 def home():
-    t = globals.allData[0].to_string()
-    return t
+    t = globals.allData[0]
+    tdict = t.get_dict()
+    return tdict
 # globals.get_value(t, "X_axis_RMS_Velocity_mmPerSec_1")
 
 
 @app.route('/test2')
 def home1():
-    return globals.allData[1].to_string()
+    t = globals.allData[1]
+    tdict = t.get_dict()
+    return tdict
 
 @app.route('/test3')
 def home2():
-    return globals.allData[2].to_string()
+    if len(globals.allData) <3:
+        return "Error: MP_Energy_Monitoring Not Available"
+    t = globals.allData[2]
+    tdict = t.get_dict()
+    return tdict
 
 @socketio.on('message')
 def handle_message(msg):

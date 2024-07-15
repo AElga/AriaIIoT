@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import NavBar from './NavBar';
+import GaugeComponent from 'react-gauge-component'
+import guage from './Guage.css'
 
 class EnergyMonitoring extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiResponse: "",
+      apiResponse: {},
       messages: [],
     };
     this.callAPI = this.callAPI.bind(this);
@@ -14,7 +17,7 @@ class EnergyMonitoring extends Component {
   callAPI() {
     fetch("http://localhost:5000/test2")
       .then((res) => res.text())
-      .then((res) => this.setState({ apiResponse: res }))
+      .then((res) => this.setState({ apiResponse: JSON.parse(res) }))
       .catch((err) => console.error("Fetch error: ", err));
   }
 
@@ -22,7 +25,7 @@ class EnergyMonitoring extends Component {
     this.callAPI();
     this.interval = setInterval(() => {
       this.callAPI(); // Fetch data at regular intervals
-    }, 5000); // Adjust the interval as needed
+    }, 1000); // Adjust the interval as needed
 
     // Set up WebSocket connection
     this.socket = io('http://localhost:5000');
@@ -47,17 +50,29 @@ class EnergyMonitoring extends Component {
 
     return (
       <div className="Energy">
+        <NavBar></NavBar>
         <header className="Energy-header">
-          <h1>Enegy monitoring</h1>
-          <p>{apiResponse}</p>
-          
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                Topic: {msg.topic}, Data: {JSON.stringify(msg.data)}
-              </li>
+          <h1>Energy monitoring</h1>
+          <div className="guage">
+          <GaugeComponent
+            arc={{
+              subArcs: [
+                { limit: 0, color: '#', showTick: true },
+                { limit: 200, color: '#5BE12C', showTick: true },
+                { limit: 260, color: '#F5CD19', showTick: true },
+                { limit: 360, color: '#EA4228', showTick: true },
+              ],
+            }}
+            value={parseFloat(apiResponse.Current_2)} 
+            maxValue={360}
+            minValue={0}
+            
+            
+          />
+          </div>
+          {Object.keys(apiResponse).map((key) => (
+              <p key={key}>{key}: {apiResponse[key]}</p>
             ))}
-          </ul>
         </header>
       </div>
     );
