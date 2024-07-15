@@ -9,20 +9,20 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-@app.route('/test')
+@app.route('/test1')
 def home():
-    t = globals.allData[1].to_string()
+    t = globals.allData[0].to_string()
     return t
 # globals.get_value(t, "X_axis_RMS_Velocity_mmPerSec_1")
 
 
-# @app.route('/test2')
-# def home():
-#     return globals.allData[1].to_string()
+@app.route('/test2')
+def home1():
+    return globals.allData[1].to_string()
 
-# @app.route('/test3')
-# def home():
-#     return globals.allData[2].to_string()
+@app.route('/test3')
+def home2():
+    return globals.allData[2].to_string()
 
 @socketio.on('message')
 def handle_message(msg):

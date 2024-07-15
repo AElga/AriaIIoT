@@ -2,8 +2,14 @@
 // my name is mariam
 // frontend now
 //Ali Elgazzar comme
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+//import React, { useState, useEffect } from 'react';
+//import io from 'socket.io-client';
+import VibPage from './VibPage';
+import Home from './Home';
+import EnergyMonitoring from './EnergyMonitoring';
+import MPMonitoring from './MPMonitoring';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 
 // class App extends React.Component {
 //   constructor(props) {
@@ -39,57 +45,50 @@ import io from 'socket.io-client';
 // }
 
 const App = () => {
-  const [apiResponse, setApiResponse] = useState("");
-  const [messages, setMessages] = useState([]);
+  // const [apiResponse, setApiResponse] = useState("");
+  // const [messages, setMessages] = useState([]);
   
-  const callAPI = () => {
-    fetch("http://localhost:5000/test")
-      .then(res => res.text())
-      .then(res => setApiResponse(res))
-      .catch(err => console.error("Fetch error: ", err));
-  };
+  // const callAPI = () => {
+  //   fetch("http://localhost:5000/test")
+  //     .then(res => res.text())
+  //     .then(res => setApiResponse(res))
+  //     .catch(err => console.error("Fetch error: ", err));
+  // };
 
-  useEffect(() => {
-    callAPI();
-    console.log("0")
-    const interval = setInterval(() => {
-      console.log("1")
-      callAPI(); // Fetch data at regular intervals
-    }, 500);
+  // useEffect(() => {
+  //   callAPI();
+  //   const interval = setInterval(() => {
+  //     callAPI(); // Fetch data at regular intervals
+  //   }, 500);
 
     
-    // Set up WebSocket connection
-    const socket = io('http://localhost:5000');
+  //   // Set up WebSocket connection
+  //   const socket = io('http://localhost:5000');
 
-    // Listen for updates from the server
-    socket.on('update', (data) => {
-      console.log("2")
-      setMessages((prevMessages) => [...prevMessages, data]);
-      callAPI();
-    });
+  //   // Listen for updates from the server
+  //   // socket.on('update', (data) => {
+  //   //   setMessages((prevMessages) => [...prevMessages, data]);
+  //   //   callAPI();
+  //   // });
 
-    // Clean up the WebSocket connection
-    return () => {
-      clearInterval(interval);
-      console.log("3")
-      socket.off('update');
-      socket.disconnect();
-    };
-  }, []);
+  //   // Clean up the WebSocket connection
+  //   return () => {
+  //     clearInterval(interval);
+  //     socket.off('update');
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>{apiResponse}</p>
-        <h1>Real-Time Updates</h1>
-        <ul>
-          {messages.map((msg, index) => (
-            <li key={index}>
-              Topic: {msg.topic}, Data: {JSON.stringify(msg.data)}
-            </li>
-          ))}
-        </ul>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>} exact />
+          <Route path="/Vib" element={<VibPage />} exact/>
+          <Route path="/Energy" element={<EnergyMonitoring />} exact/>
+          <Route path="/MP" element={<MPMonitoring />} exact/>
+          </Routes>
+          </BrowserRouter>
     </div>
   );
 };

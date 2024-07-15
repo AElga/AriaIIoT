@@ -31,8 +31,8 @@ def on_message(client, userdata, message):
     dict = {}
     json_parser.parseJSON(payload, dict)
     #Debugging: 
-    # print(f"Received message on topic {topic}: {dict.items()} ")
-    if globals.topic_contains(topic, globals.topics) == False:
+    print(f"Received message on topic {topic}: {dict.items()} ")
+    if not globals.topic_contains(topic, globals.topics):
         globals.topics.append(topic)
     for i, (t, _) in enumerate(userdata):
         if t == topic:
@@ -43,7 +43,7 @@ def on_message(client, userdata, message):
 
     extract_topic(userdata)
 
-    app.send_update({'topic': topic, 'data': dict})
+    # app.send_update({'topic': topic, 'data': dict})
 
     
 
