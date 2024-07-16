@@ -1,4 +1,9 @@
 .guage {
-    width: 300px;  /* Set your desired width */
-    height: 300px; /* Set your desired height */
+    width: 400px;  /* Set your desired width */
+    height: 190px; /* Set your desired height */
+  
+  }
+
+  .font {
+    color: #FFF;
   }

@@ -6,14 +6,13 @@ import ariaLogo from './ariaLogo.png';
 
 
 const NavBar = () => {
-    return (
-        // <React.Fragment>
-          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+  return (
+          <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary nav-underline">
     <div class="container-fluid">
     <a class="navbar-brand" href="/">
-        <img src={ariaLogo} alt="Logo" width="106" height="57" class="d-inline-block align-text-top"/> 
+        <img src={ariaLogo} alt="Logo" width="116 px" height="57 px" class="d-inline-block align-text-top"/> 
       </a>
-  
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link ms-4" href="Vib"><h4>Predicitve Maintenance</h4></a>
@@ -24,6 +23,7 @@ const NavBar = () => {
     </div>
   </nav>
     );
+  
 }
 
 export default NavBar;

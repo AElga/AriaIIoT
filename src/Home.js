@@ -14,23 +14,11 @@ class Home extends Component {
 
 
     return (
-      <NavBar></NavBar>
-      //   <Link to="Vib">
-      //     <button type="button" >
-      //       Go to Vib
-      //     </button>
-      //   </Link>
-      //   <Link to="Energy">
-      //     <button type="button" >
-      //       Go to Energy
-      //     </button>
-      //   </Link>
-      //   <Link to="MP">
-      //     <button type="button" >
-      //       Go to MP
-      //     </button>
-      //   </Link>
-      // </React.Fragment>
+      
+      <div className='Home'>
+        <NavBar></NavBar>
+        <h1>Welcome to Aria Technologies!</h1>
+      </div>
     );
   }
 }
