@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from './NavBar';
+import Chart from 'chart.js/auto';
 import GaugeComponent from 'react-gauge-component'
 import guage from './Guage.css'
 import font from './Guage.css'
 import { blue } from '@mui/material/colors';
 import background from './background.png';
+import { Line } from "react-chartjs-2";
+import "chartjs-plugin-streaming";
+import moment from "moment";
+//import CanvasJSReact from '@canvasjs/react-charts';
+
+
+//var CanvasJS = CanvasJSReact.CanvasJS;
+//var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 
 class EnergyMonitoring extends Component {
   constructor(props) {
@@ -16,7 +26,21 @@ class EnergyMonitoring extends Component {
       messages: [],
     };
     this.callAPI = this.callAPI.bind(this);
+    //this.generateDataPoints = this.generateDataPoints.bind(this);
   }
+
+  // generateDataPoints(noOfDps, dd) {
+	// 	var xVal = 1, yVal = 100;
+	// 	var dps = [];
+	// 	for(var i = 0; i < noOfDps; i++) {
+	// 		yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+	// 		dps.push({x: xVal , y: yVal});	
+	// 		xVal++;
+	// 	}
+	// 	return dps;
+	// }
+
+  
 
   callAPI() {
     fetch("http://localhost:5000/test2")
@@ -49,9 +73,87 @@ class EnergyMonitoring extends Component {
     this.socket.disconnect();
   }
 
+  
+
   render() {
+
+    const Chart = require("react-chartjs-2").Chart;
+
+    const chartColors = {
+      red: "rgb(255, 99, 132)",
+      orange: "rgb(255, 159, 64)",
+      yellow: "rgb(255, 205, 86)",
+      green: "rgb(75, 192, 192)",
+      blue: "rgb(54, 162, 235)",
+      purple: "rgb(153, 102, 255)",
+      grey: "rgb(201, 203, 207)"
+    };
+    
+    //const color = Chart.helpers.color;
+    const data = {
+      datasets: [
+        {
+          label: "Current Graph (Amp)",
+          backgroundColor: "#aec312",
+          borderColor: chartColors.red,
+          fill: false,
+          lineTension: 0,
+          borderDash: [8, 4],
+          data: []
+        }
+      ]
+    };
+    
+    const options = {
+      // elements: {
+      //   line: {
+      //     tension: 0.5
+      //   }
+      // },
+      scales: {
+        x: [
+          {
+            type: "realtime",
+            // distribution: "linear",
+            realtime: {
+              onRefresh: function(chart) {
+                chart.data.datasets[0].data.push({
+                  x: moment(),
+                  y: Math.random()
+                });
+              },
+              delay: 3000,
+              time: {
+                displayFormat: "h:mm"
+              }
+            },
+            ticks: {
+              displayFormats: 1,
+              maxRotation: 0,
+              minRotation: 0,
+              stepSize: 1,
+              maxTicksLimit: 30,
+              // minUnit: "second",
+              source: "auto",
+              autoSkip: true,
+              callback: function(value) {
+                return moment(value, "HH:mm:ss").format("mm:ss");
+              }
+            }
+          }
+        ],
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              max: 10
+            }
+          }
+        ]
+      }
+    };
     const myStyle = {
-      backgroundImage: `url(${background})`,
+     // backgroundImage: `url(${background})`,
       // height: "110vh",
       marginTop: "-70px",
       backgroundSize: "cover",
@@ -60,8 +162,11 @@ class EnergyMonitoring extends Component {
       // backgroundAttachment: "fixed"
 
   };
-    const { apiResponse, messages } = this.state;
+  const { apiResponse, messages } = this.state;
 
+  
+    
+    
     return (
       
       <div className="Energy">
@@ -266,7 +371,27 @@ class EnergyMonitoring extends Component {
               <p key={key}>{key}: {apiResponse[key]}</p>
             ))} 
              </div> */}
-            <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+            {/* <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br> */}
+            </div>
+             <div class="row">
+              <div class="col"> 
+
+              <Line data={data} options={options} />
+              {/* <CanvasJSChart options = {{
+    theme: "light2", // "light1", "dark1", "dark2"
+    animationEnabled: true,
+    zoomEnabled: true,
+    title: {
+      text: "Try Zooming and Panning"
+    },
+    data: [{
+      type: "area",
+      dataPoints: this.generateDataPoints(20, apiResponse.Current_2)
+    }]
+  }} 
+				/* onRef={ref => this.chart = ref} */
+              }
+              </div>
             </div>
         </header>
         </div>

@@ -12,7 +12,10 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/test1')
 def home():
-    t = globals.allData[0]
+    t= None
+    for x in (globals.allData):
+        if x.get_topic() == "Vib_Temp_Measurements":
+            t = x
     tdict = t.get_dict()
     return tdict
 # globals.get_value(t, "X_axis_RMS_Velocity_mmPerSec_1")
@@ -20,15 +23,19 @@ def home():
 
 @app.route('/test2')
 def home1():
-    t = globals.allData[1]
+    t= None
+    for x in (globals.allData):
+        if x.get_topic() == "Energy_Monitoring":
+            t = x
     tdict = t.get_dict()
     return tdict
 
 @app.route('/test3')
 def home2():
-    if len(globals.allData) <3:
-        return "Error: MP_Energy_Monitoring Not Available"
-    t = globals.allData[2]
+    t= None
+    for x in (globals.allData):
+        if x.get_topic() == "MP_Energy_Monitoring":
+            t = x
     tdict = t.get_dict()
     return tdict
 
