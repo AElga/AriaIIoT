@@ -2,20 +2,42 @@ import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from './NavBar';
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js';
 import GaugeComponent from 'react-gauge-component'
 import guage from './Guage.css'
 import font from './Guage.css'
 import { blue } from '@mui/material/colors';
 import background from './background.png';
-import { Line } from "react-chartjs-2";
-import "chartjs-plugin-streaming";
+// import { Line } from "react-chartjs-2";
+// import "chartjs-plugin-streaming";
 import moment from "moment";
-//import CanvasJSReact from '@canvasjs/react-charts';
+import { Chart } from 'react-google-charts';
+import CanvasJSReact from '@canvasjs/react-charts';
+import { color } from 'highcharts';
 
 
-//var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJS = CanvasJSReact.CanvasJS;
 //var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+var dps = [];
+var dps2 = [];
+var dps3 = [];
+var xVal = 0;
+var yVal = 0;
+var yVal2 = 0;
+var yVal3 = 0;
+var updateInterval = 3000;
+
+var CanvasJSChartvolt = CanvasJSReact.CanvasJSChart;
+var dvs = [];
+var dvs2 = [];
+var dvs3 = [];
+var xval = 0;
+var yval = 0;
+var yval2 = 0;
+var yval3 = 0;
+var updateInterval = 3000;
 
 
 class EnergyMonitoring extends Component {
@@ -26,27 +48,14 @@ class EnergyMonitoring extends Component {
       messages: [],
     };
     this.callAPI = this.callAPI.bind(this);
-    //this.generateDataPoints = this.generateDataPoints.bind(this);
+    this.updateChart = this.updateChart.bind(this);
   }
-
-  // generateDataPoints(noOfDps, dd) {
-	// 	var xVal = 1, yVal = 100;
-	// 	var dps = [];
-	// 	for(var i = 0; i < noOfDps; i++) {
-	// 		yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-	// 		dps.push({x: xVal , y: yVal});	
-	// 		xVal++;
-	// 	}
-	// 	return dps;
-	// }
-
-  
 
   callAPI() {
     fetch("http://localhost:5000/test2")
-      .then((res) => res.text())
-      .then((res) => this.setState({ apiResponse: JSON.parse(res) }))
-      .catch((err) => console.error("Fetch error: ", err));
+    .then((res) => res.text())
+    .then((res) => this.setState({ apiResponse: JSON.parse(res)}))
+    .catch((err) => console.error("Fetch error: ", err));
   }
 
   componentDidMount() {
@@ -54,6 +63,7 @@ class EnergyMonitoring extends Component {
     this.interval = setInterval(() => {
       this.callAPI(); // Fetch data at regular intervals
     }, 1000); // Adjust the interval as needed
+    this.interval2 = setInterval(this.updateChart, updateInterval);
 
     // Set up WebSocket connection
     this.socket = io('http://localhost:5000');
@@ -69,91 +79,59 @@ class EnergyMonitoring extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+    clearInterval(this.interval2)
     this.socket.off('update');
     this.socket.disconnect();
   }
 
-  
+  updateChart() {  // Access apiResponse from state
+    
+    yVal =  parseFloat(this.state.apiResponse.Current_3);
+    yVal2 =  parseFloat(this.state.apiResponse.Current_2);
+    yVal3 =  parseFloat(this.state.apiResponse.Current_4);
+
+    dps.push({x: xVal, y: yVal});
+    dps2.push({x: xVal, y: yVal2});
+    dps3.push({x: xVal, y: yVal3});
+    xVal++;
+    
+    if (dps.length > 20) {
+      dps.shift();
+    }
+    if (dps2.length > 20) {
+      dps2.shift();
+    }
+    if (dps3.length > 20) {
+      dps3.shift();
+    }
+    this.chart.render();
+
+    yval =  parseFloat(this.state.apiResponse.V12);
+    yval2 =  parseFloat(this.state.apiResponse.V23);
+    yval3 =  parseFloat(this.state.apiResponse.V31);
+
+    dvs.push({x: xval, y: yval});
+    dvs2.push({x: xval, y: yval2});
+    dvs3.push({x: xval, y: yval3});
+    xval++;
+    
+    if (dvs.length > 20) {
+      dvs.shift();
+    }
+    if (dvs2.length > 20) {
+      dvs2.shift();
+    }
+    if (dvs3.length > 20) {
+      dvs3.shift();
+    }
+    this.chart.render();
+	 
+}
 
   render() {
 
-    const Chart = require("react-chartjs-2").Chart;
-
-    const chartColors = {
-      red: "rgb(255, 99, 132)",
-      orange: "rgb(255, 159, 64)",
-      yellow: "rgb(255, 205, 86)",
-      green: "rgb(75, 192, 192)",
-      blue: "rgb(54, 162, 235)",
-      purple: "rgb(153, 102, 255)",
-      grey: "rgb(201, 203, 207)"
-    };
-    
-    //const color = Chart.helpers.color;
-    const data = {
-      datasets: [
-        {
-          label: "Current Graph (Amp)",
-          backgroundColor: "#aec312",
-          borderColor: chartColors.red,
-          fill: false,
-          lineTension: 0,
-          borderDash: [8, 4],
-          data: []
-        }
-      ]
-    };
-    
-    const options = {
-      // elements: {
-      //   line: {
-      //     tension: 0.5
-      //   }
-      // },
-      scales: {
-        x: [
-          {
-            type: "realtime",
-            // distribution: "linear",
-            realtime: {
-              onRefresh: function(chart) {
-                chart.data.datasets[0].data.push({
-                  x: moment(),
-                  y: Math.random()
-                });
-              },
-              delay: 3000,
-              time: {
-                displayFormat: "h:mm"
-              }
-            },
-            ticks: {
-              displayFormats: 1,
-              maxRotation: 0,
-              minRotation: 0,
-              stepSize: 1,
-              maxTicksLimit: 30,
-              // minUnit: "second",
-              source: "auto",
-              autoSkip: true,
-              callback: function(value) {
-                return moment(value, "HH:mm:ss").format("mm:ss");
-              }
-            }
-          }
-        ],
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-              max: 10
-            }
-          }
-        ]
-      }
-    };
     const myStyle = {
-     // backgroundImage: `url(${background})`,
+      backgroundImage: `url(${background})`,
       // height: "110vh",
       marginTop: "-70px",
       backgroundSize: "cover",
@@ -161,11 +139,126 @@ class EnergyMonitoring extends Component {
       //backgroundRepeat: "no-repeat",
       // backgroundAttachment: "fixed"
 
-  };
+    };
   const { apiResponse, messages } = this.state;
 
-  
+  const temperatureData = [
+    ['Time', 'Current'],
+    [2017, 32],
+    [2018, 35],
+    [2019, 31],
+    [2020, 37],
+    [2021, 30]];
     
+    const options = {
+			title :{
+				text: "Current Measurement",
+        fontColor: "#FFFFFF",
+        fontFamily: "Arial", // Change this to the font you want
+        fontSize: 24, // Optional: Set the font size
+        fontWeight: "bold"
+			},
+      backgroundColor: "#156b9F6A",
+      axisX: {
+        title:"Time",
+        labelFontColor: "#FFFFFF", // Color of x-axis labels
+       lineColor: "#BBBBBB", // Color of x-axis line
+        tickColor: "#FFFFFF", // Color of x-axis ticks
+        titleFontColor: "#FFFFFF" // Color of x-axis title (if any)
+    },
+    axisY: {
+      title:"Ampere",
+        labelFontColor: "#FFFFFF", // Color of y-axis labels
+         lineColor: "#BBBBBB", // Color of y-axis line
+        tickColor: "#FFFFFF", // Color of y-axis ticks
+        titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
+        // gridColor: "#CCCCCC" // Color of y-axis grid lines
+    },
+    legend: {
+      fontColor: "#FFFFFF",
+    verticalAlign: "top", // Move legend to the top
+        horizontalAlign: "center"
+    },
+      
+			data: [
+				{
+					type: "line",
+					name: " Current 1",
+					showInLegend: true,
+					dataPoints: dps,
+          color: "#ff00ff"
+				},
+				{
+					type: "line",
+					name: "Current 2",
+					showInLegend: true,
+					dataPoints: dps2,
+          color: "#ff0000"
+				},
+        {
+					type: "line",
+					name: "Current 3",
+					showInLegend: true,
+					dataPoints: dps3,
+          color: "#00ff00"
+				}
+		  ]
+
+		}
+    const optionsvolt = {
+			title :{
+				text: "Voltage Measurement",
+        fontColor: "#FFFFFF",
+        fontFamily: "Arial", // Change this to the font you want
+        fontSize: 24, // Optional: Set the font size
+        fontWeight: "bold"
+			},
+      backgroundColor: "#156b9F6A",
+      axisX: {
+        title:"Time",
+        labelFontColor: "#FFFFFF", // Color of x-axis labels
+       lineColor: "#BBBBBB", // Color of x-axis line
+        tickColor: "#FFFFFF", // Color of x-axis ticks
+        titleFontColor: "#FFFFFF" // Color of x-axis title (if any)
+    },
+    axisY: {
+      title:"Volts",
+        labelFontColor: "#FFFFFF", // Color of y-axis labels
+         lineColor: "#BBBBBB", // Color of y-axis line
+        tickColor: "#FFFFFF", // Color of y-axis ticks
+        titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
+        // gridColor: "#CCCCCC" // Color of y-axis grid lines
+    },
+    legend: {
+      fontColor: "#FFFFFF",
+    verticalAlign: "top", // Move legend to the top
+        horizontalAlign: "center"
+    },
+			data: [
+				{
+					type: "line",
+					name: " Voltage 1",
+					showInLegend: true,
+					dataPoints: dvs,
+          color: "#ffff00"
+				},
+				{
+					type: "line",
+					name: "Voltage 2",
+					showInLegend: true,
+					dataPoints: dvs2,
+          color: "#ff0000"
+				},
+        {
+					type: "line",
+					name: "Voltage 3",
+					showInLegend: true,
+					dataPoints: dvs3,
+          color: "#00ff00"
+				}
+		  ]
+
+		}
     
     return (
       
@@ -371,27 +464,42 @@ class EnergyMonitoring extends Component {
               <p key={key}>{key}: {apiResponse[key]}</p>
             ))} 
              </div> */}
-            {/* <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br> */}
+            
             </div>
-             <div class="row">
-              <div class="col"> 
 
-              <Line data={data} options={options} />
-              {/* <CanvasJSChart options = {{
-    theme: "light2", // "light1", "dark1", "dark2"
-    animationEnabled: true,
-    zoomEnabled: true,
-    title: {
-      text: "Try Zooming and Panning"
-    },
-    data: [{
-      type: "area",
-      dataPoints: this.generateDataPoints(20, apiResponse.Current_2)
-    }]
-  }} 
-				/* onRef={ref => this.chart = ref} */
-              }
-              </div>
+             <br></br><br></br> 
+
+             <div class="row">
+
+              <div class="col-6"> 
+              <Box
+              border={"medium"}
+              backgroundColor={"#7f93a18C"}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+              >
+            <CanvasJSChart options = {options}
+				      onRef={ref => this.chart = ref}/>
+              </Box>
+        </div>
+            
+            
+            <div class="col"> 
+            <Box
+              border={"medium"}
+              backgroundColor={"#7f93a18C"}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+              >
+            <CanvasJSChartvolt options = {optionsvolt}
+				      onRef={ref => this.chart = ref}/>
+              </Box>
+
+            </div>
             </div>
         </header>
         </div>
@@ -400,5 +508,6 @@ class EnergyMonitoring extends Component {
     );
   }
 }
+
 
 export default EnergyMonitoring;
