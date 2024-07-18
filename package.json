@@ -11,10 +11,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
+<<<<<<< HEAD
+=======
     "chart.js": "^4.4.3",
     "chartjs-adapter-moment": "^1.0.1",
     "highcharts": "^11.4.6",
     "highcharts-react-official": "^3.2.1",
+>>>>>>> 1f69ac3be7ebb3c84885792a471eea6b2cf40c4c
     "material": "^0.9.15",
     "moment": "^2.30.1",
     "mui": "^0.0.1",
@@ -22,10 +25,15 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-gauge-component": "^1.2.21",
+<<<<<<< HEAD
+    "react-router-dom": "^6.24.1",
+    "react-scripts": "5.0.1",
+=======
     "react-google-charts": "^4.0.1",
     "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
     "recharts": "^2.12.7",
+>>>>>>> 1f69ac3be7ebb3c84885792a471eea6b2cf40c4c
     "socket.io-client": "^4.7.5",
     "web-vitals": "^2.1.4"
   },
