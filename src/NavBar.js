@@ -3,12 +3,13 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import ariaLogo from './ariaLogo.png';
+import './Guage.css';
 
 
 const NavBar = () => {
 
   return (
-          <nav class="navbar sticky-top navbar-expand-lg nav-underline" style={{backgroundColor: "#999698"}} >
+          <nav class="navbar navbar-expand-lg nav-underline" style={{backgroundColor: "#99969800"}} >
     <div class="container-fluid" >
     <a class="navbar-brand ms-4" href="/">
         <img src={ariaLogo} alt="Logo" width="116 px" height="57 px" class="d-inline-block align-text-top"/> 
@@ -17,21 +18,21 @@ const NavBar = () => {
         <div class="navbar-nav">
         
         <NavLink className="nav-link ms-4" to="/Vib">
-              <h4>Predictive Maintenance</h4>  
+              <h4 class="font">Predictive Maintenance</h4>  
             </NavLink>    
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Fake Predictive Alarm</a></li>
             </ul>
             <NavLink className="nav-link ms-4" to="/Energy">
-              <h4>Energy Monitoring</h4>
+              <h4 class="font">Energy Monitoring</h4>
             </NavLink>
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Fake Energy Alarm</a></li>
             </ul>
             <NavLink className="nav-link ms-4" to="/MP">
-              <h4>Performance Monitoring</h4>
+              <h4 class="font">Performance Monitoring</h4>
             </NavLink>
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
             <ul class="dropdown-menu">
@@ -40,17 +41,17 @@ const NavBar = () => {
         </div>
         
       </div>
-      <form class="d-flex me-5" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-      <button class="btn btn-outline-primary" type="submit" style={{backgroundColor: "#AAAAAA"}} >Search</button>
+      <form class="d-flex me-5" role="search" >
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  />
+      <button class="btn btn-outline-light btn-bg-dark" type="submit"  >Search</button>
     </form>
-    <div>
+    {/* <div>
     <nav class="navbar mh-75  fixed-bottom" style={{backgroundColor: "#999698"}}>
   <div class="container-fluid h-100" style={{backgroundColor: "#999698"}}>
     <a class="navbar-brand" href="#">Back to Top</a>
     <img src={ariaLogo} alt="Logo" width="143 px" height="70 px" class="d-inline-block align-text-top"/>
   </div>
-</nav></div>
+</nav></div> */}
     </div>
   </nav>
     );

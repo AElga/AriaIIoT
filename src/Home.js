@@ -16,20 +16,21 @@ class Home extends Component {
   render() {
     const myStyle = {
       backgroundImage: `url(${background})`,
-      height: "100vh",
-      marginTop: "-70px",
+      minHeight: "100vh", // Full viewport height
       backgroundSize: "cover",
-      backgroundAttachment: "fixed"
-      //backgroundRepeat: "no-repeat",
-      // backgroundAttachment: "fixed"
-
-  };
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      overflowX: "hidden",
+      overflowY: "hidden"
+    };
 
     return (
       
       <div className='Home'>
+        
+        <div style={myStyle}> 
         <NavBar></NavBar>
-        <div style={myStyle}> <br></br><br></br><br></br><br></br>
         <div class="row">
           <div class="col-3"></div>
           <div class="col">

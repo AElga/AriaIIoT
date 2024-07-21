@@ -6,18 +6,11 @@ import NavBar from './NavBar';
 import GaugeComponent from 'react-gauge-component'
 import guage from './Guage.css'
 import font from './Guage.css'
-import { blue } from '@mui/material/colors';
 import background from './background.png';
 // import { Line } from "react-chartjs-2";
 // import "chartjs-plugin-streaming";
-import moment from "moment";
-import { Chart } from 'react-google-charts';
 import CanvasJSReact from '@canvasjs/react-charts';
-import { color } from 'highcharts';
 
-
-var CanvasJS = CanvasJSReact.CanvasJS;
-//var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var dps = [];
@@ -79,7 +72,7 @@ class EnergyMonitoring extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
-    clearInterval(this.interval2)
+    clearInterval(this.interval2);
     this.socket.off('update');
     this.socket.disconnect();
   }
@@ -89,11 +82,13 @@ class EnergyMonitoring extends Component {
     yVal =  parseFloat(this.state.apiResponse.Current_3);
     yVal2 =  parseFloat(this.state.apiResponse.Current_2);
     yVal3 =  parseFloat(this.state.apiResponse.Current_4);
+    xVal = new Date(); // Get the current time
+    
 
     dps.push({x: xVal, y: yVal});
     dps2.push({x: xVal, y: yVal2});
     dps3.push({x: xVal, y: yVal3});
-    xVal++;
+    // xVal++;
     
     if (dps.length > 20) {
       dps.shift();
@@ -109,11 +104,12 @@ class EnergyMonitoring extends Component {
     yval =  parseFloat(this.state.apiResponse.V12);
     yval2 =  parseFloat(this.state.apiResponse.V23);
     yval3 =  parseFloat(this.state.apiResponse.V31);
+    xval = new Date();
 
     dvs.push({x: xval, y: yval});
     dvs2.push({x: xval, y: yval2});
     dvs3.push({x: xval, y: yval3});
-    xval++;
+    // xval++;
     
     if (dvs.length > 20) {
       dvs.shift();
@@ -132,23 +128,15 @@ class EnergyMonitoring extends Component {
 
     const myStyle = {
       backgroundImage: `url(${background})`,
-      // height: "110vh",
-      marginTop: "-70px",
+      minHeight: "100vh", // Full viewport height
       backgroundSize: "cover",
-      backgroundAttachment: "fixed"
-      //backgroundRepeat: "no-repeat",
-      // backgroundAttachment: "fixed"
-
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      overflowX: "hidden",
+      overflowY: "hidden"
     };
   const { apiResponse, messages } = this.state;
-
-  const temperatureData = [
-    ['Time', 'Current'],
-    [2017, 32],
-    [2018, 35],
-    [2019, 31],
-    [2020, 37],
-    [2021, 30]];
     
     const options = {
 			title :{
@@ -164,7 +152,8 @@ class EnergyMonitoring extends Component {
         labelFontColor: "#FFFFFF", // Color of x-axis labels
        lineColor: "#BBBBBB", // Color of x-axis line
         tickColor: "#FFFFFF", // Color of x-axis ticks
-        titleFontColor: "#FFFFFF" // Color of x-axis title (if any)
+        titleFontColor: "#FFFFFF", // Color of x-axis title (if any)
+        valueFormatString: "HH:mm:ss"
     },
     axisY: {
       title:"Ampere",
@@ -186,7 +175,7 @@ class EnergyMonitoring extends Component {
 					name: " Current 1",
 					showInLegend: true,
 					dataPoints: dps,
-          color: "#ff00ff"
+          color: "#ffff00"
 				},
 				{
 					type: "line",
@@ -219,7 +208,9 @@ class EnergyMonitoring extends Component {
         labelFontColor: "#FFFFFF", // Color of x-axis labels
        lineColor: "#BBBBBB", // Color of x-axis line
         tickColor: "#FFFFFF", // Color of x-axis ticks
-        titleFontColor: "#FFFFFF" // Color of x-axis title (if any)
+        titleFontColor: "#FFFFFF",// Color of x-axis title (if any)
+        valueFormatString: "HH:mm:ss"
+
     },
     axisY: {
       title:"Volts",
@@ -263,8 +254,8 @@ class EnergyMonitoring extends Component {
     return (
       
       <div className="Energy">
-        <NavBar></NavBar>  
-        <div style={myStyle}> <br></br><br></br>
+          
+        <div style={myStyle}><NavBar></NavBar> 
         <header className="Energy-header" >
           <br></br><br></br>
           <div class="row">
