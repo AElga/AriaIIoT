@@ -615,12 +615,15 @@ class VibPage extends Component {
           <div class="row">
           <div class="col-6"> 
               <Box
-              border={"medium"}
-              backgroundColor={"#7f93a18C"}
-              display="flex"
+             backgroundColor={"#156B998C"}
+             display="flex"
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              borderRadius="8px"
+              padding="3px"
+                border="2px solid #333333" // White borders
+                boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
               >
             <CanvasJSChartM options = {optionsM}
 				      onRef={ref => this.chart = ref}/>
@@ -630,12 +633,15 @@ class VibPage extends Component {
             
             <div class="col"> 
             <Box
-              border={"medium"}
-              backgroundColor={"#7f93a18C"}
-              display="flex"
+             backgroundColor={"#156B998C"}
+             display="flex"
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              borderRadius="8px"
+              padding="3px"
+                border="2px solid #333333" // White borders
+                boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
               >
             <CanvasJSChartP options = {optionsP}
 				      onRef={ref => this.chart = ref}/>
@@ -649,12 +655,17 @@ class VibPage extends Component {
             </div> */}
           <div class="col"> 
           <Box
-              border={"medium"}
-              backgroundColor={"#7f93a18C"}
-              display="flex"
+             backgroundColor={"#156B998C"}
+             display="flex"
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              padding="3px"
+              borderRadius="8px"
+                border="2px solid #333333" // White borders
+                boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+                width={"900pt"}
+                marginLeft={"150px"}
               >
             <CanvasJSChartTemp options = {optionstemp}
 				      onRef={ref => this.chart = ref}/>
@@ -664,6 +675,7 @@ class VibPage extends Component {
           {/* <div class="col-3"> 
             </div> */}
           </div>
+          <br></br><br></br>
         </header>
         </div>
       </div>
