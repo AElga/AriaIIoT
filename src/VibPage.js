@@ -247,7 +247,7 @@ class VibPage extends Component {
           </div>
           <br></br><br></br><br></br>
           <div class="row">
-            <div class="col">
+            <div class="col-3">
             <Box
               //backgroundColor={"#7f93a1AA"}
               gridColumn="span 4"
@@ -279,7 +279,7 @@ class VibPage extends Component {
           <p class="font">mm/sec</p>
           </Box>
             </div>
-            <div class="col">
+            <div class="col-3">
             <Box
               //backgroundColor={"#7f93a1AA"}
               gridColumn="span 4"
@@ -311,7 +311,7 @@ class VibPage extends Component {
           <p class="font">mm/sec</p>
           </Box>
             </div>
-            <div class="col">
+            <div class="col-3">
             <Box
               //backgroundColor={"#7f93a1AA"}
               gridColumn="span 4"
@@ -343,7 +343,7 @@ class VibPage extends Component {
           <p class="font">mm/sec</p>
           </Box>
             </div>
-            <div class="col">
+            <div class="col-3">
             <Box
               //backgroundColor={"#7f93a1AA"}
               gridColumn="span 4"
