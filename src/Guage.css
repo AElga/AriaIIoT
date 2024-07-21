@@ -23,3 +23,25 @@
 .navbar .nav-link:hover {
   border-bottom: 2px solid #FFFFFF; /* Adjust the thickness as needed */
 }
+.title1{
+  font-size: 220%;
+  color: #FFF;
+  font-weight:650;
+}
+.value1{
+  font-size: 180%;
+  margin-top: -2%;
+  color: #FFF;
+  font-weight:500;
+}
+.title2{
+  font-size: 230%;
+  color: #FFF;
+  /* margin-bottom: 80px; */
+  font-weight:650;
+}
+.value2{
+  font-size: 250%;
+  color: #FFF;
+  /* font-weight:500; */
+}
