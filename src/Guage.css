@@ -7,3 +7,19 @@
   .font {
     color: #FFF;
   }
+  
+  /* Dropdown arrow color */
+.navbar .nav-link.dropdown-toggle::after {
+  border-top: 0.3em solid #FFFFFF;  /* Ensure this is the color you want */
+  border-right: 0.3em solid transparent;
+  border-left: 0.3em solid transparent;
+  border-bottom: 0;
+}
+
+/* Underline for the current tab */
+.navbar .nav-link.active {
+  border-bottom: 2px solid #FFFFFF; /* Adjust the thickness as needed */
+}
+.navbar .nav-link:hover {
+  border-bottom: 2px solid #FFFFFF; /* Adjust the thickness as needed */
+}
