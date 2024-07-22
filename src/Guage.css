@@ -6,6 +6,12 @@
 
   .font {
     color: #FFF;
+    justify-content: center;
+  }
+  .homefont {
+    font-size: 26px;
+    color: #FFF;
+    justify-content: center;
   }
   
   /* Dropdown arrow color */

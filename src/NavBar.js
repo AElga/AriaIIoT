@@ -1,61 +1,78 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import ariaLogo from './ariaLogo.png';
 import './Guage.css';
 
-
 const NavBar = () => {
-
   return (
-          <nav class="navbar navbar-expand-lg nav-underline" style={{backgroundColor: "#99969800"}} >
-    <div class="container-fluid" >
-    <a class="navbar-brand ms-4" href="/">
-        <img src={ariaLogo} alt="Logo" width="116 px" height="57 px" class="d-inline-block align-text-top"/> 
-      </a>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-        
-        <NavLink className="nav-link ms-4" to="/Vib">
-              <h4 class="font">Predictive Maintenance</h4>  
-            </NavLink>    
-            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Fake Predictive Alarm</a></li>
-            </ul>
+    <nav className="navbar navbar-expand-sm nav-underline" style={{ backgroundColor: "#99969800" }}>
+      <div className="container-fluid">
+        <a className="navbar-brand ms-4" href="/">
+          <img src={ariaLogo} alt="Logo" width="116" height="57" className="d-inline-block align-text-top" />
+        </a>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <NavLink className="nav-link ms-4" to="/Vib">
+              <h4 className="font">Predictive Maintenance</h4>
+            </NavLink>
+            <div className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="predictiveDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h4 className="font"></h4>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="predictiveDropdown">
+                <li><NavLink className="dropdown-item" to="/PredictivePage">Predictive Page</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/PredictiveAlarm">Predictive Alarm</NavLink></li>
+              </ul>
+            </div>
             <NavLink className="nav-link ms-4" to="/Energy">
-              <h4 class="font">Energy Monitoring</h4>
+              <h4 className="font">Energy Monitoring</h4>
             </NavLink>
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Fake Energy Alarm</a></li>
-            </ul>
+            <div className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="energyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h4 className="font"></h4>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="energyDropdown">
+                <li><NavLink className="dropdown-item" to="/EnergyPage">Energy Page</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
+              </ul>
+            </div>
             <NavLink className="nav-link ms-4" to="/MP">
-              <h4 class="font">Performance Monitoring</h4>
+              <h4 className="font">Performance Monitoring</h4>
             </NavLink>
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Fake MP Alarm</a></li>
-            </ul>
+            <div className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="performanceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h4 className="font"></h4>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="performanceDropdown">
+                <li><NavLink className="dropdown-item" to="/PerformancePage">Performance Page</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/PerformanceAlarm">Performance Alarm</NavLink></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        
-      </div>
-      <form class="d-flex me-5" role="search" >
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  />
-      <button class="btn btn-outline-light btn-bg-dark" type="submit"  >Search</button>
-    </form>
-    {/* <div>
-    <nav class="navbar mh-75  fixed-bottom" style={{backgroundColor: "#999698"}}>
-  <div class="container-fluid h-100" style={{backgroundColor: "#999698"}}>
-    <a class="navbar-brand" href="#">Back to Top</a>
-    <img src={ariaLogo} alt="Logo" width="143 px" height="70 px" class="d-inline-block align-text-top"/>
-  </div>
-</nav></div> */}
-    </div>
-  </nav>
-    );
-  
+        <form className="d-flex me-5" role="search">
+          <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button className="btn btn-outline-light btn-bg-dark" type="submit">Search</button>
+        </form>
+        <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+
+        <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div className="offcanvas-body">
+            ...
+          </div>
+        </div>
+      </div>  
+    </nav>
+  );
 }
 
 export default NavBar;
