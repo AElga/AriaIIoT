@@ -10,6 +10,7 @@ import background from './background.png';
 // import { Line } from "react-chartjs-2";
 // import "chartjs-plugin-streaming";
 import CanvasJSReact from '@canvasjs/react-charts';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -20,7 +21,7 @@ var xVal = 0;
 var yVal = 0;
 var yVal2 = 0;
 var yVal3 = 0;
-var updateInterval = 3000;
+var updateInterval = 1000;
 
 var CanvasJSChartvolt = CanvasJSReact.CanvasJSChart;
 var dvs = [];
@@ -30,7 +31,7 @@ var xval = 0;
 var yval = 0;
 var yval2 = 0;
 var yval3 = 0;
-var updateInterval = 3000;
+var updateInterval = 1000;
 
 
 class EnergyMonitoring extends Component {
@@ -134,7 +135,9 @@ class EnergyMonitoring extends Component {
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       overflowX: "hidden",
-      overflowY: "hidden"
+      overflowY: "hidden",
+      margin: '0 auto', 
+      // maxWidth: '1200px'
     };
   const { apiResponse, messages } = this.state;
     
@@ -250,7 +253,32 @@ class EnergyMonitoring extends Component {
 		  ]
 
 		}
+    const energyJoules = apiResponse.TotEnergy;
+  
+    // Convert to megajoules (MJ) and round to one decimal place
+    const energyMJ = energyJoules / 1e6;
+    const roundedEnergyMJ = Math.round(energyMJ * 100) / 100;
     
+    const getColorForVoltage = (value) => {
+      if (value < 365) {
+        return '#FFFFFF'; // White
+      } else if (value >= 365 && value < 370) {
+        return '#FFFF00'; // Yellow
+      } else if (value >= 370) {
+        return '#FF0000'; // Red
+      }
+      return '#adadac'; // Default color
+    };
+  
+    const voltageValue1 = parseFloat(apiResponse.V12);
+    const voltageValue2 = parseFloat(apiResponse.V23);
+    const voltageValue3 = parseFloat(apiResponse.V31);
+
+    const voltageColor1 = getColorForVoltage(voltageValue1);
+    const voltageColor2 = getColorForVoltage(voltageValue2);
+    const voltageColor3 = getColorForVoltage(voltageValue3);
+
+
     return (
       
       <div className="Energy">
@@ -267,18 +295,25 @@ class EnergyMonitoring extends Component {
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
-              marginLeft={"100px"}
-              width="600px" // Adjust the width as needed
               borderRadius="8px" // Adjust the radius as needed
               padding="16px" // Optional: Add padding to provide spacing inside the box
-                border="2px solid #333333" // White borders
-                boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+              border="2px solid #333333" // White borders
+              boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+              marginLeft={{ xs: "0px", sm: "74px" }}
+              width={{ xs: "100%", sm: "600px" }}
+              mb={2}
             >
-              <Typography class='title1' fontWeight="600" color={"#FFFFFF"}>
-            Total Energy
-          </Typography>
+              <Box 
+        width="100%" // Make the inner Box take the full width
+        display="flex"
+        justifyContent="flex-start"
+      >
+        <Typography className='title1' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
+          Total Energy
+        </Typography>
+      </Box>
           <Typography class='value1' fontWeight="600" color={"#FFFFFF"}>
-            {apiResponse.TotEnergy}
+            {roundedEnergyMJ} MJ
           </Typography>
 
             </Box>
@@ -291,16 +326,23 @@ class EnergyMonitoring extends Component {
              alignItems="center"
              justifyContent="center"
              flexDirection="column"
-             marginLeft={"40px"}
-             width="600px" // Adjust the width as needed
              borderRadius="8px" // Adjust the radius as needed
              padding="16px" // Optional: Add padding to provide spacing inside the box
-            border="2px solid #333333" // White borders
-                boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+             border="2px solid #333333" // White borders
+             boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+             marginLeft={{ xs: "0px", sm: "84px" }}
+             width={{ xs: "100%", sm: "600px" }}
+             mb={2}
            >
-              <Typography class='title1' fontWeight="600" color={"#FFFFFF"}>
-            Power
-          </Typography>
+              <Box 
+        width="100%" // Make the inner Box take the full width
+        display="flex"
+        justifyContent="flex-start"
+      >
+        <Typography className='title1' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
+          Power
+        </Typography>
+      </Box>
           <Typography class ='value1' fontWeight="600" color={"#FFFFFF"}>
             {apiResponse.Power} kW
           </Typography>
@@ -319,8 +361,10 @@ class EnergyMonitoring extends Component {
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
-              width="400px" 
-              marginLeft={"50px"}
+              width={{ xs: "100%", sm: "400px" }}
+              marginLeft={{ xs: "0px", sm: "50px" }}
+
+                mb={2}
               // Adjust the width as needed
             //  borderRadius="8px" // Adjust the radius as needed
             //  padding="16px" // Optional: Add padding to provide spacing inside the box
@@ -367,6 +411,9 @@ class EnergyMonitoring extends Component {
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              width={{ xs: "100%", sm: "400px" }}
+            marginLeft={{ xs: "0px", sm: "50px" }}
+            mb={2}
               >
               <Typography variant="h5" fontWeight="600" color={"#FFFFFF"}>
               Current 2
@@ -406,6 +453,9 @@ class EnergyMonitoring extends Component {
               alignItems="center"
               justifyContent="center"
               flexDirection="column"
+              width={{ xs: "100%", sm: "400px" }}
+            marginLeft={{ xs: "0px", sm: "50px" }}
+            mb={2}
               >
               <Typography variant="h5" fontWeight="600" color={"#FFFFFF"}>
               Current 3
@@ -448,24 +498,29 @@ class EnergyMonitoring extends Component {
              gridColumn="span 4"
                 display="flex"
                 alignItems="center"
-                marginLeft={"50px"}
+                marginLeft={{ xs: "0px", sm: "50px" }}
+                width={{ xs: "100%", sm: "400px" }}
+                mb={2}
                 justifyContent="center"
-                flexDirection="column"
-                width="400px" // Adjust the width as needed
+                flexDirection={'column'}
                 borderRadius="8px" // Adjust the radius as needed
                 padding="16px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
+
               >
-              <h4 class="font">Voltage 1  
-               </h4>
-              <h6 class="value2">{apiResponse.V12} V
-              {/* <img
-          src="https://cdn2.iconfinder.com/data/icons/architecture-9/64/High_Voltage-512.png"
-          alt="Current Icon"
-          style={{ width: '40px', height: '40px', marginRight: '8px' }}
-        /> */}
-              </h6>
+              <Box 
+        width="100%" // Make the inner Box take the full width
+        display="flex"
+        justifyContent="flex-start"
+      >
+        <Typography className='font' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
+          Voltage 1
+        </Typography>
+      </Box>
+              <Typography fontSize={"35px"} color={voltageColor1}>{apiResponse.V12} V
+              
+              </Typography>
               </Box>
               </div>
             <div class="col m-4">
@@ -474,24 +529,29 @@ class EnergyMonitoring extends Component {
              gridColumn="span 4"
                 display="flex"
                 alignItems="center"
-                marginLeft={"10px"}
                 justifyContent="center"
                 flexDirection="column"
-                width="400px" // Adjust the width as needed
                 borderRadius="8px" // Adjust the radius as needed
                 padding="16px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
+                width={{ xs: "100%", sm: "400px" }}
+            marginLeft={{ xs: "0px", sm: "20px" }}
+            mb={2}
               >
               
-              <h4 class="font">Voltage 2
-              {/* <img
-          src="https://cdn2.iconfinder.com/data/icons/architecture-9/64/High_Voltage-512.png"
-          alt="Current Icon"
-          style={{ width: '40px', height: '40px', marginRight: '8px' }}
-        /> */}
-              </h4>
-              <h6 class="value2">{apiResponse.V23} V</h6>
+              <Box 
+        width="100%" // Make the inner Box take the full width
+        display="flex"
+        justifyContent="flex-start"
+      >
+        <Typography className='font' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
+          Voltage 2
+        </Typography>
+      </Box>
+              <Typography fontSize={"35px"} color={voltageColor2}>{apiResponse.V23} V
+              
+              </Typography>
               </Box>
             </div>
             <div class="col m-4">
@@ -503,20 +563,25 @@ class EnergyMonitoring extends Component {
                 // marginLeft={"50px"}
                 justifyContent="center"
                 flexDirection="column"
-                width="400px" // Adjust the width as needed
+                width={{ xs: "100%", sm: "400px" }}
                 borderRadius="8px" // Adjust the radius as needed
                 padding="16px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
               >
-              <h4 class="font">Voltage 3
-              {/* <img
-          src="https://cdn2.iconfinder.com/data/icons/architecture-9/64/High_Voltage-512.png"
-          alt="Current Icon"
-          style={{ width: '40px', height: '40px', marginRight: '8px' }}
-        /> */}
-              </h4>
-              <h6 class="value2">{apiResponse.V31} V</h6>
+              <Box 
+        width="100%" // Make the inner Box take the full width
+        display="flex"
+        justifyContent="flex-start"
+      >
+        <Typography className='font' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
+          Voltage 3
+          
+        </Typography>
+      </Box>
+              <Typography fontSize={"35px"} color={voltageColor3}>{apiResponse.V31} V
+              
+              </Typography>
               </Box>
             </div>
             {/* <div class="col">
@@ -543,6 +608,7 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
+                marginLeft={"74px"}
               >
             <CanvasJSChart options = {options}
 				      onRef={ref => this.chart = ref}/>
@@ -561,7 +627,7 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-              
+                marginRight={"60px"}
               >
             <CanvasJSChartvolt options = {optionsvolt}
 				      onRef={ref => this.chart = ref}/>

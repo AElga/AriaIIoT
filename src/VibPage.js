@@ -361,8 +361,9 @@ class VibPage extends Component {
             }}
             pointer={{
               color: '#888888',
-              length: 0.80,
               width: 15,
+              type: 'arrow', // Adjust the base width of the pointer
+              
               // elastic: true,
             }}
             labels={{
@@ -446,9 +447,9 @@ class VibPage extends Component {
             }}
             pointer={{
               color: '#888888',
-              length: 0.80,
               width: 15,
               // elastic: true,
+              type: 'arrow',
             }}
             labels={{
               valueLabel: { formatTextValue: value => value + 'ºC' },

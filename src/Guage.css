@@ -40,8 +40,28 @@
   /* margin-bottom: 80px; */
   font-weight:650;
 }
-.value2{
-  font-size: 250%;
-  color: #FFF;
-  /* font-weight:500; */
+.box {
+  width: 100%;
+  max-width: 400px;
+  margin: 16px auto;
+  padding: 16px;
+  border: 2px solid #333333;
+  box-shadow: 4px 7px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  background-color: #156B998C;
+}
+@media (max-width: 600px) {
+  .Energy-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .col {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  
+  .col-4 {
+    width: 100% !important;
+  }
 }
