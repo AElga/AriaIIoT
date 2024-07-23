@@ -1,0 +1,65 @@
+import React, { Component } from 'react';
+import { Backdrop, Box, Typography, } from "@mui/material";
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './styleL.css';
+
+
+class SignUp extends Component {
+    constructor(props) {
+        super(props);
+      }
+    
+      render() {
+        return(
+            <div className='SignUp'>
+                <div class="section">
+		<div class="container">
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+						<h6 class="mb-0 pb-3 large-font" style={{color: "#ffffff"}}><span>Sign Up</span></h6>
+			          	<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-2 pb-2">Sign Up</h4>
+											<div class="form-group">
+												<input type="text" name="logname" class="form-style" placeholder="Company Name" id="logname" autocomplete="off"/>
+												<i class="input-icon uil uil-user"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="email" name="logemail" class="form-style" placeholder="Company Email" id="logemail" autocomplete="off"/>
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="logpass" class="form-style" placeholder="Password" id="logpass" autocomplete="off"/>
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input type="password" name="logpass" class="form-style" placeholder="Confirm Password" id="logpass" autocomplete="off"/>
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+											<a href="#" class="btn mt-2">Submit</a>
+                                            <p class="mb-0 mt-4 text-center"><a href="/Login" class="link">Return to Login</a></p>
+				      					</div>
+			      					</div>
+			      				</div>
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
+
+            </div>
+        );
+      }
+
+      
+}
+
+export default SignUp;

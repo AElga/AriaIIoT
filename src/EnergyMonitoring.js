@@ -608,7 +608,10 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                marginLeft={"74px"}
+                // marginLeft={"74px"}
+                marginLeft={{ xs: "0px", sm: "74px" }}
+                width={{ xs: "100%", sm: "700px" }}
+                mb={2}
               >
             <CanvasJSChart options = {options}
 				      onRef={ref => this.chart = ref}/>
@@ -627,7 +630,10 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                marginRight={"60px"}
+                marginRight={{ xs: "0px", sm: "60px" }}
+                width={{ xs: "100%", sm: "710px" }}
+
+                mb={2}
               >
             <CanvasJSChartvolt options = {optionsvolt}
 				      onRef={ref => this.chart = ref}/>
