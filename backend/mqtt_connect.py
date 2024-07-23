@@ -5,6 +5,19 @@ import paho.mqtt.client as mqtt
 from mqtt_requests import extract_topic
 from flask_socketio import emit
 import app
+import threading
+
+message_count = 0
+
+# def reset_and_print_message_count():
+#     global message_count
+#     print(f"Messages received in the last minute: {message_count}")
+#     message_count = 0
+#     # Schedule this function to be called again after 60 seconds
+#     threading.Timer(60, reset_and_print_message_count).start()
+
+# Initialize the message count reset and print function
+# reset_and_print_message_count()
 
 def on_subscribe(client, userdata, mid, reason_code_list, properties):
     # Since we subscribed only for a single channel, reason_code_list contains
@@ -26,12 +39,17 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
 
 
 def on_message(client, userdata, message):
+    global message_count
+    message_count += 1
+
     topic = message.topic
     payload = message.payload.decode('utf-8')  # Decode payload if it's a string
     dict = {}
     json_parser.parseJSON(payload, dict)
     #Debugging: 
-    # print(f"Received message on topic {topic}: {dict.items()} ")
+    # print(f"Received message on topic {topic} ")
+    # counter= counter+1
+    # print(message_count)
     if not globals.topic_contains(topic, globals.topics):
         globals.topics.append(topic)
     for i, (t, _) in enumerate(userdata):
