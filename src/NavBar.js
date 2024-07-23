@@ -66,7 +66,7 @@ const NavBar = () => {
   User  
   </button>
   <ul class="dropdown-menu dropdown-menu-dark">
-    <li><a class="dropdown-item active" href="/Login">Log out</a></li>
+    <li><a class="dropdown-item active" href="/">Log out</a></li>
   </ul>
 </div>
         

@@ -32,7 +32,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Start/>} exact /> */}
-          <Route path="/Login" element={<Login/>} exact />
+          <Route path="/" element={<Login/>} exact />
           <Route path="/SignUp" element={<SignUp/>} exact />
           <Route path="/Home" element={<Home/>} exact />
           <Route path="/Vib" element={<VibPage />} exact/>

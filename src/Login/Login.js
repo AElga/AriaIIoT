@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import './styleL.css';
+import './style.css';
 
 
 class Login extends Component {
@@ -37,7 +37,7 @@ class Login extends Component {
 												<input type="password" name="logpass" class="form-style" placeholder="Password" id="logpass" autocomplete="off"/>
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a href="/" class="btn mt-4">submit</a>
+											<a href="/Home" class="btn mt-4">submit</a>
                             				<p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot Password?</a></p>
 											<p class="mb-0 mt-4 text-center"><a href="/SignUp" class="link">Create New Account</a></p>
 				      					</div>

@@ -3,7 +3,7 @@ import { Backdrop, Box, Typography, } from "@mui/material";
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './styleL.css';
+import './style.css';
 
 
 class SignUp extends Component {
@@ -43,7 +43,7 @@ class SignUp extends Component {
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
 											<a href="#" class="btn mt-2">Submit</a>
-                                            <p class="mb-0 mt-4 text-center"><a href="/Login" class="link">Return to Login</a></p>
+                                            <p class="mb-0 mt-4 text-center"><a href="/" class="link">Return to Login</a></p>
 				      					</div>
 			      					</div>
 			      				</div>
