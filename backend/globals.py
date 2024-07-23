@@ -1,6 +1,14 @@
 topics = [] #used for duplicate detection
 allData = []
 
+TempUsername = "FadlAllah@Alhamdulilah.rab"
+TempPass = "NodeRedSucks"
+LoggedIn = False
+
+def authenticate(u, p):
+    if u == TempUsername and p == TempPass: LoggedIn = True
+    return LoggedIn
+
 def topic_contains(s, list):
     for i in list:
         if i == s: return True

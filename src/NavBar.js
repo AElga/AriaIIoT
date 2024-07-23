@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-sm nav-underline" style={{ backgroundColor: "#99969800" }}>
       <div className="container-fluid">
-        <a className="navbar-brand ms-4" href="/">
+        <a className="navbar-brand ms-4" href="/Home">
           <img src={ariaLogo} alt="Logo" width="116" height="57" className="d-inline-block align-text-top" />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
               </ul>
             </div>
-            <NavLink className="nav-link ms-4" to="/MP">
+            {/* <NavLink className="nav-link ms-4" to="/MP">
               <h4 className="font">Performance Monitoring</h4>
             </NavLink>
             <div className="nav-item dropdown">
@@ -52,7 +52,7 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/PerformancePage">Performance Page</NavLink></li>
                 <li><NavLink className="dropdown-item" to="/PerformanceAlarm">Performance Alarm</NavLink></li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
         <form className="d-flex me-5" role="search">
