@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-sm nav-underline" style={{ backgroundColor: "#99969800" }}>
       <div className="container-fluid">
-        <a className="navbar-brand ms-4" href="/">
+        <a className="navbar-brand ms-4" href="/Home">
           <img src={ariaLogo} alt="Logo" width="116" height="57" className="d-inline-block align-text-top" />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

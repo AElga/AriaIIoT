@@ -71,33 +71,48 @@
     width: 100% !important;
   }
 }
-.bordered-table {
-  border-collapse: collapse; /* Ensures borders don't double up */
-  border: 2px solid #333; /* Outer border */
-  width: 100%; /* Adjust table width as needed */
+
+.table-container {
+  position: relative;
+  width: 90%;
+  background: rgba(255, 255, 255, 0.3); 
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  /* border-radius: 10px;  */
+  /* Optional: for rounded corners */
+  margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
 }
 
-.bordered-table th, 
-.bordered-table td {
-  border: 1px solid #ccc; /* Inner border */
-  padding: 8px; /* Adds spacing inside cells */
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.bordered-table thead th {
-  background-color: #f8f9fa; /* Optional: background color for headers */
-  font-weight: bold; /* Optional: bold headers */
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
 }
+
+.table th {
+  background: rgba(0, 0, 0, 0.2); /* Optional: darken header background */
+  color: white;
+}
+
+.table td {
+  color: black;
+}
+
 .danger-row {
-  /* background-color: red; */
-  color: red;
+  color: red !important;
 }
 
 .warning-row {
-  /* background-color: yellow; */
-  color: yellow;
+  color: yellow !important;
 }
 
 .normal-row {
-  /* background-color: white; */
-  color: black;
+  color: black !important;
 }
+
+

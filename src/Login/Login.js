@@ -45,50 +45,50 @@ const Login = () => {
     };
 
     return (
-        <div className='Login'>
-            <div className="section">
+        <div className='Login body1'>
+            <div className="section1">
                 <div className="container">
-                    <div className="row full-height justify-content-center">
+                    <div className="row full-height1 justify-content-center">
                         <div className="col-12 text-center align-self-center py-5">
-                            <div className="section pb-5 pt-5 pt-sm-2 text-center">
-                                <h6 className="mb-0 pb-3 large-font" style={{ color: "#ffffff" }}><span>Log In</span></h6>
-                                <div className="card-3d-wrap mx-auto">
-                                    <div className="card-3d-wrapper">
-                                        <div className="card-front">
-                                            <div className="center-wrap">
-                                                <div className="section text-center">
-                                                    <h4 className="mb-4 pb-3">Log In</h4>
+                            <div className="section1 pb-5 pt-5 pt-sm-2 text-center">
+                                <h6 className="h61 mb-0 pb-3 large1-font" style={{ color: "#ffffff" }}><span>Log In</span></h6>
+                                <div className="card1-3d-wrap mx-auto">
+                                    <div className="card1-3d-wrapper">
+                                        <div className="card1-front">
+                                            <div className="center1-wrap">
+                                                <div className="section1 text-center">
+                                                    <h4 className="h41 mb-4 pb-3">Log In</h4>
                                                     <form onSubmit={handleSubmit}>
-                                                        <div className="form-group">
+                                                        <div className="form1-group">
                                                             <input
                                                                 type="email"
                                                                 name="username"
-                                                                className="form-style"
+                                                                className="form1-style"
                                                                 placeholder="Email"
                                                                 id="logemail"
                                                                 autoComplete="off"
                                                                 value={username}
                                                                 onChange={(e) => setUsername(e.target.value)}
                                                             />
-                                                            <i className="input-icon uil uil-at"></i>
+                                                            <i className="input1-icon uil uil-at"></i>
                                                         </div>
-                                                        <div className="form-group mt-2">
+                                                        <div className="form1-group mt-2">
                                                             <input
                                                                 type="password"
                                                                 name="password"
-                                                                className="form-style"
+                                                                className="form1-style"
                                                                 placeholder="Password"
                                                                 id="logpass"
                                                                 autoComplete="off"
                                                                 value={password}
                                                                 onChange={(e) => setPassword(e.target.value)}
                                                             />
-                                                            <i className="input-icon uil uil-lock-alt"></i>
+                                                            <i className="input1-icon uil uil-lock-alt"></i>
                                                         </div>
-                                                        <button type="submit" className="btn mt-4">Submit</button>
+                                                        <button type="submit" className="a1 btn1 mt-4">Submit</button>
 														
-                                                        <p className="mb-0 mt-4 text-center"><a href="#0" className="link">Forgot Password?</a></p>
-                                                        <p className="mb-0 mt-4 text-center"><a href="/SignUp" className="link">Create New Account</a></p>
+                                                        <p className="p1 mb-0 mt-4 text-center"><a href="#0" className="link">Forgot Password?</a></p>
+                                                        <p className="p1 mb-0 mt-4 text-center"><a href="/SignUp" className="link">Create New Account</a></p>
                                                     </form>
                                                 </div>
                                             </div>
