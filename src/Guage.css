@@ -71,3 +71,33 @@
     width: 100% !important;
   }
 }
+.bordered-table {
+  border-collapse: collapse; /* Ensures borders don't double up */
+  border: 2px solid #333; /* Outer border */
+  width: 100%; /* Adjust table width as needed */
+}
+
+.bordered-table th, 
+.bordered-table td {
+  border: 1px solid #ccc; /* Inner border */
+  padding: 8px; /* Adds spacing inside cells */
+}
+
+.bordered-table thead th {
+  background-color: #f8f9fa; /* Optional: background color for headers */
+  font-weight: bold; /* Optional: bold headers */
+}
+.danger-row {
+  /* background-color: red; */
+  color: red;
+}
+
+.warning-row {
+  /* background-color: yellow; */
+  color: yellow;
+}
+
+.normal-row {
+  /* background-color: white; */
+  color: black;
+}

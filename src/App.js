@@ -9,8 +9,10 @@ import Home from './Home';
 import Login from './Login/Login'
 import EnergyMonitoring from './EnergyMonitoring';
 import MPMonitoring from './MPMonitoring';
+import EnergyAlarm from './EnergyAlarm'
 import SignUp from './Login/SignUp';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import PredictiveAlarm from './PredictiveAlarm';
 
 // class Start extends Comment {
 //   constructor(props) {
@@ -36,6 +38,9 @@ const App = () => {
           <Route path="/Vib" element={<VibPage />} exact/>
           <Route path="/Energy" element={<EnergyMonitoring />} exact/>
           <Route path="/MP" element={<MPMonitoring />} exact/>
+          <Route path="/EnergyAlarm" element={<EnergyAlarm/>} exact/>
+          <Route path="/PredictiveAlarm" element={<PredictiveAlarm/>} exact/>
+
           </Routes>
           </BrowserRouter>
     </div>
