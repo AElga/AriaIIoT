@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from './NavBar';
-import GaugeComponent from 'react-gauge-component'
-import guage from './Guage.css'
-import font from './Guage.css'
-import { blue } from '@mui/material/colors';
+import './Guage.css'
 import background from './background.png';
-import CanvasJSReact from '@canvasjs/react-charts';
 
 class EnergyAlarm extends Component {
   constructor(props) {
@@ -15,14 +11,58 @@ class EnergyAlarm extends Component {
     this.state = {
       apiResponse: {},
       messages: [],
+      stateChangeTimes: {},
     };
     this.callAPI = this.callAPI.bind(this);  }
 
   callAPI() {
     fetch("http://localhost:5000/test2")
       .then((res) => res.text())
-      .then((res) => this.setState({ apiResponse: JSON.parse(res)}))
+      .then((res) => {
+        this.updateStateChangeTimes(JSON.parse(res));
+        this.setState({ apiResponse: JSON.parse(res) });
+      }) 
       .catch((err) => console.error("Fetch error: ", err));
+  }
+
+
+  updateStateChangeTimes(newApiResponse) {
+    const { stateChangeTimes, apiResponse } = this.state;
+    const newStateChangeTimes = { ...stateChangeTimes };
+
+    const ranges = {
+      V12: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
+      V23: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
+      V31: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
+      TotEnergy: {normal:[0,999] ,warning: [1000, 200], danger: [2001, Infinity] },
+      Current_1: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
+      Current_2: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
+      Current_3: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
+      Power: {normal: [0,99],warning: [100, 200], danger: [201, Infinity] },
+    };
+
+    const getState = (key, value) => {
+      const range = ranges[key];
+      if (!range) return 'Normal';
+
+      if (value >= range.danger[0] && value <= range.danger[1]) {
+        return 'Danger';
+      } else if (value >= range.warning[0] && value <= range.warning[1]) {
+        return 'Warning';
+      } else {
+        return 'Normal';
+      }
+    };
+
+    Object.keys(newApiResponse).forEach((key) => {
+      const newState = getState(key, newApiResponse[key]);
+      const oldState = getState(key, apiResponse[key]);
+      if (newState !== oldState) {
+        newStateChangeTimes[key] = new Date().toLocaleString();
+      }
+    });
+
+    this.setState({ stateChangeTimes: newStateChangeTimes });
   }
 
   componentDidMount() {
@@ -53,7 +93,7 @@ class EnergyAlarm extends Component {
 
 
   render() {
-    const {apiResponse, messages } = this.state;
+    const { apiResponse, stateChangeTimes } = this.state;
 
     const descriptions = {
         V12: "Displays Voltage between line 1 and line 2",
@@ -124,15 +164,16 @@ class EnergyAlarm extends Component {
   <tbody>
   {keys.map((key, index) => {
                   const state = getState(key, apiResponse[key]);
-                  const rowClass = state === 'Danger' ? 'danger-row' : state === 'Warning' ? 'warning-row' : 'normal-row';
+                  const rowClass = state === "Danger" ? "danger-row" : state === "Warning" ? "warning-row" : "normal-row";
 
                   return (
-                    <tr key={index} className={rowClass}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{key}</td>
-                      <td>{descriptions[key]}</td>
-                      <td>{apiResponse[key]}</td>
-                      <td>{state}</td>
+                    <tr key={index}>
+                      <th className={rowClass} scope="row">{index + 1}</th>
+                      <td className={rowClass}>{stateChangeTimes[key] || 'N/A'}</td>
+                      <td className={rowClass}>{key}</td>
+                      <td className={rowClass}>{descriptions[key]}</td>
+                      <td className={rowClass}>{apiResponse[key]}</td>
+                      <td className={rowClass}>{state}</td>
                     </tr>
                   );
                 })}
