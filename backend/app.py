@@ -1,6 +1,6 @@
 #communication channel between the front end and back end
 import globals
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 import mqtt_connect
@@ -9,6 +9,8 @@ from topic_data import TopicData
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+
 
 @app.route('/test1')
 def home():
@@ -38,6 +40,19 @@ def home2():
             t = x
     tdict = t.get_dict()
     return tdict
+
+@app.route('/log', methods=["POST"])
+def lgn():
+    user = request.json['username']
+    passw = request.json['password']
+    print(user + " " + passw)
+    if globals.authenticate(user, passw):
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @socketio.on('message')
 def handle_message(msg):

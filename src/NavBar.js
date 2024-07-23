@@ -41,7 +41,7 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
               </ul>
             </div>
-            <NavLink className="nav-link ms-4" to="/MP">
+            {/* <NavLink className="nav-link ms-4" to="/MP">
               <h4 className="font">Performance Monitoring</h4>
             </NavLink>
             <div className="nav-item dropdown">
@@ -52,7 +52,7 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/PerformancePage">Performance Page</NavLink></li>
                 <li><NavLink className="dropdown-item" to="/PerformanceAlarm">Performance Alarm</NavLink></li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
         <form className="d-flex me-5" role="search">
