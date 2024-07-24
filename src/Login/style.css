@@ -6,7 +6,7 @@
   font-size: 15px;
   line-height: 1.7;
   color: #000000;
-  background: url('/src/background.png') no-repeat center center fixed;
+  background: url('/src/Images/background.png') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
   overflow-y: hidden;

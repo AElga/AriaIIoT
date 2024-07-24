@@ -20,7 +20,6 @@ def home():
             t = x
     tdict = t.get_dict()
     return tdict
-# globals.get_value(t, "X_axis_RMS_Velocity_mmPerSec_1")
 
 
 @app.route('/test2')

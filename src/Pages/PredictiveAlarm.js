@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 import GaugeComponent from 'react-gauge-component'
-import guage from './Guage.css'
-import font from './Guage.css'
+import guage from '../Guage.css'
+import font from '../Guage.css'
 import { blue } from '@mui/material/colors';
-import background from './background.png';
+import background from '../Images/background.png';
 import CanvasJSReact from '@canvasjs/react-charts';
 
 class PredictiveAlarm extends Component {

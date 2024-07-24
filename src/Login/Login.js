@@ -5,6 +5,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './style.css';
 
 
+
+
+
 const Login = () => {
     const [apiResponse, setApiResponse] = useState("");
     const [username, setUsername] = useState("");
@@ -38,7 +41,7 @@ const Login = () => {
                     navigate("/Home");
                 } else {
                     console.error("Authentication failed");
-					
+
                 }
             })
             .catch(err => console.error("Fetch error: ", err));
@@ -46,6 +49,7 @@ const Login = () => {
 
     return (
         <div className='Login body1'>
+
             <div className="section1">
                 <div className="container">
                     <div className="row full-height1 justify-content-center">
@@ -86,7 +90,7 @@ const Login = () => {
                                                             <i className="input1-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         <button type="submit" className="a1 btn1 mt-4">Submit</button>
-														
+
                                                         <p className="p1 mb-0 mt-4 text-center"><a href="#0" className="link">Forgot Password?</a></p>
                                                         <p className="p1 mb-0 mt-4 text-center"><a href="/SignUp" className="link">Create New Account</a></p>
                                                     </form>
