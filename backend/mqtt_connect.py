@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 from mqtt_requests import extract_topic
 from flask_socketio import emit
 import app
-import threading
+# import threading
 
 message_count = 0
 
@@ -39,8 +39,8 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
 
 
 def on_message(client, userdata, message):
-    global message_count
-    message_count += 1
+    # global message_count
+    # message_count += 1
 
     topic = message.topic
     payload = message.payload.decode('utf-8')  # Decode payload if it's a string
