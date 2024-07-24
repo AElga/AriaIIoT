@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-sm nav-underline" style={{ backgroundColor: "#99969800" }}>
       <div className="container-fluid">
-        <a className="navbar-brand ms-4" href="/">
+        <a className="navbar-brand ms-4" href="/Home">
           <img src={ariaLogo} alt="Logo" width="116" height="57" className="d-inline-block align-text-top" />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
               </ul>
             </div>
-            <NavLink className="nav-link ms-4" to="/MP">
+            {/* <NavLink className="nav-link ms-4" to="/MP">
               <h4 className="font">Performance Monitoring</h4>
             </NavLink>
             <div className="nav-item dropdown">
@@ -52,24 +52,24 @@ const NavBar = () => {
                 <li><NavLink className="dropdown-item" to="/PerformancePage">Performance Page</NavLink></li>
                 <li><NavLink className="dropdown-item" to="/PerformanceAlarm">Performance Alarm</NavLink></li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
         <form className="d-flex me-5" role="search">
           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
           <button className="btn btn-outline-light btn-bg-dark" type="submit">Search</button>
         </form>
-        <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
-
-        <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div className="offcanvas-body">
-            ...
-          </div>
-        </div>
+        
+        <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <img src ="https://cdn3.iconfinder.com/data/icons/user-interface-798/32/User_interface_user_person_avatar_customer_interface-512.png" alt="User Icon" width="20" height="20" class="me-2" />
+  User  
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark">
+    <li><a class="dropdown-item active" href="/">Log out</a></li>
+  </ul>
+</div>
+        
       </div>  
     </nav>
   );

@@ -71,3 +71,48 @@
     width: 100% !important;
   }
 }
+
+.table-container {
+  position: relative;
+  width: 90%;
+  background: rgba(255, 255, 255, 0.3); 
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  /* border-radius: 10px;  */
+  /* Optional: for rounded corners */
+  margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background: rgba(0, 0, 0, 0.2); /* Optional: darken header background */
+  color: white;
+}
+
+.table td {
+  color: black;
+}
+
+.danger-row {
+  color: red !important;
+}
+
+.warning-row {
+  color: yellow !important;
+}
+
+.normal-row {
+  color: black !important;
+}
+
+

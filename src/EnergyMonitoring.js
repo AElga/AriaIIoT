@@ -594,9 +594,10 @@ class EnergyMonitoring extends Component {
 
              <br></br><br></br> 
 
+            <div className='container'>
              <div class="row">
 
-              <div class="col-6"> 
+              <div class="col"> 
               <Box
               // border={"medium"}
               backgroundColor={"#156B998C"}
@@ -608,8 +609,10 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                marginLeft={"74px"}
-              >
+                width={{ xs: "100%", sm: "600px" }}
+                marginLeft={{ xs: "0px", sm: "20px" }}
+                //mb={2}              
+                >
             <CanvasJSChart options = {options}
 				      onRef={ref => this.chart = ref}/>
               </Box>
@@ -627,7 +630,10 @@ class EnergyMonitoring extends Component {
                 padding="3px"
                 border="2px solid #333333" // White borders
                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                marginRight={"60px"}
+                // marginRight={"60px"}
+                width={{ xs: "100%", sm: "600px" }}
+            // marginRight={{ xs: "0px", sm: "20px auto" }}
+           // mb={2}
               >
             <CanvasJSChartvolt options = {optionsvolt}
 				      onRef={ref => this.chart = ref}/>
@@ -636,6 +642,7 @@ class EnergyMonitoring extends Component {
             </div>
             </div>
             <br></br><br></br> 
+            </div>
         </header>
         </div>
         
