@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import ariaLogo from '../Images/ariaLogo.png';
-import Caresoul1 from '../Images/Caresoul1.png'
-import Caresoul2 from '../Images/Caresoul2.png'
-import Caresoul3 from '../Images/Caresoul3.png'
 import homefontfont from '../Guage.css'
 import NavBar from '../NavBar';
 import background from '../Images/background.png';
+import CustomTempGauge from '../Components/CustomGauge';
+import VibPage from './VibPage';
+
 
 class Home extends Component {
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     const myStyle = {
       backgroundImage: `url(${background})`,
@@ -59,13 +59,14 @@ class Home extends Component {
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner ms-4">
                     <div class="carousel-item ms-5 ps-5 active">
-                      <img src={Caresoul3} class="d-block w-75" alt="..." />
+                      {/* <img src={Caresoul3} class="d-block w-75" alt="..." /> */}
+                      <CustomTempGauge dta={VibPage.dta1} />
                     </div>
                     <div class="carousel-item ms-5 ps-5">
-                      <img src={Caresoul3} class="d-block w-75" alt="..." />
+                      {/* <img src={Caresoul3} class="d-block w-75" alt="..." /> */}
                     </div>
                     <div class="carousel-item ms-5 ps-5">
-                      <img src={Caresoul3} class="d-block w-75" alt="..." />
+                      {/* <img src={Caresoul3} class="d-block w-75" alt="..." /> */}
                     </div>
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -93,7 +94,7 @@ class Home extends Component {
                 <Typography variant="h3" fontWeight="600" color={"#FFFFFF"}>
                   Past 24Hr Alarms
                 </Typography>
-
+                  
               </Box>
             </div>
 

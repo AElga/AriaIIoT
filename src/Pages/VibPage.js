@@ -8,9 +8,12 @@ import font from '../Guage.css'
 import { blue } from '@mui/material/colors';
 import background from '../Images/background.png';
 import CanvasJSReact from '@canvasjs/react-charts';
-import CustomGauge from '../Components/CustomGauge';
-import CustomGauge2 from '../Components/CustomGauge2';
+import CustomTempGauge from '../Components/CustomGauge';
+import CustomAnalogGauge from '../Components/CustomGauge2';
 import CustomLine from '../Components/CustomLinechart';
+import { render } from '@testing-library/react';
+
+
 
 var CanvasJSChartM = CanvasJSReact.CanvasJSChart;
 var dms = [];
@@ -37,6 +40,7 @@ var Yval2 = 0;
 var updateInterval = 3000;
 
 
+
 class VibPage extends Component {
   constructor(props) {
     super(props);
@@ -48,6 +52,7 @@ class VibPage extends Component {
     this.updateChart = this.updateChart.bind(this);
   }
 
+   
   callAPI() {
     fetch("http://localhost:5000/test1")
       .then((res) => res.text())
@@ -133,10 +138,38 @@ class VibPage extends Component {
     this.chart.render();
 
   }
-
+   
   render() {
     const { apiResponse, messages } = this.state;
-    const myStyle = {
+    const dta1 = {value: parseFloat(apiResponse.Temperature_C_1), minv: '0', maxv: '360', arcs: [
+      { limit: 125, color: '#5BE12C', tooltip: 'Low temperature!', showTick: true },
+      { limit: 253, color: '#F5CD19', tooltip: 'OK temperature!', showTick: true },
+      { limit: 325, color: '#EA4228', tooltip: 'High temperature!', showTick: true }] }
+    const dta2 = {value: parseFloat(apiResponse.Temperature_C_2), minv: '0', maxv: '360', arcs: [
+      { limit: 125, color: '#5BE12C', tooltip: 'Low temperature!', showTick: true },
+      { limit: 253, color: '#F5CD19', tooltip: 'OK temperature!', showTick: true },
+      { limit: 325, color: '#EA4228', tooltip: 'High temperature!', showTick: true }]}
+    const dta3 = {value : parseFloat(apiResponse.X_axis_RMS_Velocity_mmPerSec_1), minv : '0', maxv: '360', arcs: [
+      { limit: 0, color: '#', showTick: true },
+      { limit: 101, color: '#5BE12C', showTick: true },
+      { limit: 256, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },]}
+    const dta4 = {value : parseFloat(apiResponse.Z_axis_RMS_Velocity_mmPerSec_1), minv : '0', maxv: '360', arcs: [
+      { limit: 0, color: '#', showTick: true },
+      { limit: 101, color: '#5BE12C', showTick: true },
+      { limit: 256, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },]}
+    const dta5 = {value : parseFloat(apiResponse.X_axis_RMS_Velocity_mmPerSec_2), minv : '0', maxv: '360', arcs: [
+      { limit: 0, color: '#', showTick: true },
+      { limit: 101, color: '#5BE12C', showTick: true },
+      { limit: 256, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },]}
+    const dta6 = {value : parseFloat(apiResponse.Z_axis_RMS_Velocity_mmPerSec_2), minv : '0', maxv: '360', arcs: [
+      { limit: 0, color: '#', showTick: true },
+      { limit: 101, color: '#5BE12C', showTick: true },
+      { limit: 256, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },]}
+      const myStyle = {
       backgroundImage: `url(${background})`,
       minHeight: "100vh", // Full viewport height
       backgroundSize: "cover",
@@ -294,7 +327,7 @@ class VibPage extends Component {
       ]
 
     }
-
+      
     return (
       <div className="VIB">
 
@@ -385,7 +418,7 @@ class VibPage extends Component {
                       maxValue={360}
 
                     /> */}
-                    <CustomGauge value={apiResponse.Temperature_C_1} />
+                    <CustomTempGauge dta={dta1} ></CustomTempGauge>
 
                   </div>
                 </Box>
@@ -469,8 +502,8 @@ class VibPage extends Component {
                       maxValue={360}
 
                     /> */}
-                    <CustomGauge value={apiResponse.Temperature_C_2}></CustomGauge>
-
+                    <CustomTempGauge dta={dta2} ></CustomTempGauge>
+                    
                   </div>
                 </Box>
               </div>
@@ -508,7 +541,7 @@ class VibPage extends Component {
                       minValue={0}
 
                     /> */}
-                    <CustomGauge2 value={apiResponse.X_axis_RMS_Velocity_mmPerSec_1} />
+                    <CustomAnalogGauge dta={dta3}/>
                   </div>
                   <br /><br /> 
                   <p class="font">mm/sec</p>
@@ -542,7 +575,7 @@ class VibPage extends Component {
                       minValue={0}
 
                     /> */}
-                    <CustomGauge2 value={apiResponse.Z_axis_RMS_Velocity_mmPerSec_1} />
+                    <CustomAnalogGauge dta={dta4} />
                   </div>
                   <br /><br /> 
                   <p class="font">mm/sec</p>
@@ -576,7 +609,7 @@ class VibPage extends Component {
                       minValue={0}
 
                     /> */}
-                     <CustomGauge2 value={apiResponse.X_axis_RMS_Velocity_mmPerSec_2} />
+                     <CustomAnalogGauge dta={dta5}/>
                   </div>
                   <br /><br /> 
                   <p class="font">mm/sec</p>
@@ -610,7 +643,7 @@ class VibPage extends Component {
                       minValue={0}
 
                     /> */}
-                       <CustomGauge2 value={apiResponse.Z_axis_RMS_Velocity_mmPerSec_2} />
+                       <CustomAnalogGauge dta={dta6}/>
                   </div>
                   <br /><br /> 
                   <p class="font">mm/sec</p>
