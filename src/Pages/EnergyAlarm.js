@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
-import NavBar from './NavBar';
-import './Guage.css'
-import background from './background.png';
-import { alignProperty } from '@mui/material/styles/cssUtils';
+import NavBar from '../NavBar';
+import '../Guage.css'
+import background from '../Images/background.png';
 
 class EnergyAlarm extends Component {
   constructor(props) {
