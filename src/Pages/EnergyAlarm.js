@@ -14,7 +14,8 @@ class EnergyAlarm extends Component {
       stateChangeTimes: {},
       dangerHistory: [],
     };
-    this.callAPI = this.callAPI.bind(this);  }
+    this.callAPI = this.callAPI.bind(this);
+    this.clearTable = this.clearTable.bind(this);  }
 
   callAPI() {
     fetch("http://localhost:5000/test2")
@@ -96,7 +97,9 @@ class EnergyAlarm extends Component {
     this.socket.disconnect();
   }
 
-
+  clearTable() {
+    this.setState({ dangerHistory: [] }); // Clear the dangerHistory
+  }
 
   render() {
     const { apiResponse, stateChangeTimes, dangerHistory} = this.state;
@@ -156,19 +159,51 @@ class EnergyAlarm extends Component {
         <NavBar></NavBar>
         <header className="EnergyAlarm-header">
         <br></br>
-        <h2 className="table-title">Energy Alarms</h2>
-
+        <div class="container">
+  <div class="row align-items-center">
+    <div class="col-12 col-md text-center">
+      <h2 className="table-title">Energy Alarms</h2>
+    </div>
+    <div class="col-12 col-md-auto">
+    </div>
+  </div>
+</div>
         <div className="table-height">
         <table className="table table-hover bordered-table blurred-table">
   <thead>
-    <tr className='first-row'>
-      <th scope="col">#</th>
-      <th scope="col">Time</th>
-      <th scope="col">Keys</th>
-      <th scope="col">Description</th>
-      <th scope="col">Value</th>
-      <th scope="col">State</th>
-    </tr>
+  <tr className='first-row'>
+  <th scope="col">#</th>
+  <th scope="col">Time</th>
+  <th scope="col">Keys</th>
+  <th scope="col">Description</th>
+  <th scope="col">Value</th>
+  <th scope="col" style={{ position: 'relative' }}>
+    <div style={{ display: 'inline-block' }}>
+      State
+    </div>
+    <button
+      className="btn btn"
+      style={{
+        backgroundColor: "#d11d1d",
+        color: "white",
+        height: "28px",
+        position: 'absolute',
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+        right: '10px',
+        top: '50%',
+        transform: 'translateY(-50%)', // Center the button vertically
+      }}
+      type="button"
+      onClick={this.clearTable} // Attach the click handler
+    >
+      <img src={"https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/512/Recycle_Bin_Full.png"} style={{ width: '20px', height: "20px", marginRight:'2px' }}/>
+      Clear
+    </button>
+  </th>
+</tr>
+
   </thead>
   <tbody>
   {dangerHistory.map((entry, index) => {

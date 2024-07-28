@@ -13,6 +13,7 @@ import EnergyAlarm from './Pages/EnergyAlarm'
 import SignUp from './Login/SignUp';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PredictiveAlarm from './Pages/PredictiveAlarm';
+import Performance from './Performance';
 
 
 document.addEventListener("contextmenu", function (event) {
@@ -44,6 +45,18 @@ setInterval(function () {
 }, 1000)
 
 
+
+// class Start extends Comment {
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     return (
+      
+//     );
+//   }
+// }
+
 const App = () => {
 
   return (
@@ -59,6 +72,8 @@ const App = () => {
           <Route path="/MP" element={<MPMonitoring />} exact/>
           <Route path="/EnergyAlarm" element={<EnergyAlarm/>} exact/>
           <Route path="/PredictiveAlarm" element={<PredictiveAlarm/>} exact/>
+          <Route path="/Performance" element={<Performance/>} exact/>
+
 
           </Routes>
           </BrowserRouter>

@@ -8,12 +8,9 @@ import font from '../Guage.css'
 import { blue } from '@mui/material/colors';
 import background from '../Images/background.png';
 import CanvasJSReact from '@canvasjs/react-charts';
-import CustomTempGauge from '../Components/CustomGauge';
-import CustomAnalogGauge from '../Components/CustomGauge2';
+import CustomGauge from '../Components/CustomGauge';
+import CustomGauge2 from '../Components/CustomGauge2';
 import CustomLine from '../Components/CustomLinechart';
-import { render } from '@testing-library/react';
-
-
 
 var CanvasJSChartM = CanvasJSReact.CanvasJSChart;
 var dms = [];
