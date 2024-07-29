@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Backdrop, Box, Typography, } from "@mui/material";
+import { Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from '../NavBar';
 // import Chart from 'chart.js';
 import GaugeComponent from 'react-gauge-component'
-import guage from '../Guage.css'
-import font from '../Guage.css'
-import background from '../Images/background.png';
-// import { Line } from "react-chartjs-2";
-// import "chartjs-plugin-streaming";
 import CanvasJSReact from '@canvasjs/react-charts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -127,18 +122,6 @@ class EnergyMonitoring extends Component {
 
   render() {
 
-    const myStyle = {
-      backgroundImage: `url(${background})`,
-      minHeight: "100vh", // Full viewport height
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      overflowX: "hidden",
-      overflowY: "hidden",
-      margin: '0 auto',
-      // maxWidth: '1200px'
-    };
     const { apiResponse, messages } = this.state;
 
     const options = {
@@ -283,7 +266,7 @@ class EnergyMonitoring extends Component {
 
       <div className="Energy">
 
-        <div style={myStyle}><NavBar></NavBar>
+        <div class="myStyle"><NavBar></NavBar>
           <header className="Energy-header" >
             <br></br><br></br>
             <div class="row">
@@ -384,20 +367,20 @@ class EnergyMonitoring extends Component {
 
                   <div className="guage">
 
-                      <GaugeComponent
-                        arc={{
-                          subArcs: [
-                            { limit: 0, color: '#', showTick: true },
-                            { limit: 200, color: '#5BE12C', showTick: true },
-                            { limit: 260, color: '#F5CD19', showTick: true },
-                            { limit: 360, color: '#EA4228', showTick: true },
-                          ],
-                        }}
-                        value={parseFloat(apiResponse.Current_3)}
-                        maxValue={360}
-                        minValue={0}
+                    <GaugeComponent
+                      arc={{
+                        subArcs: [
+                          { limit: 0, color: '#', showTick: true },
+                          { limit: 200, color: '#5BE12C', showTick: true },
+                          { limit: 260, color: '#F5CD19', showTick: true },
+                          { limit: 360, color: '#EA4228', showTick: true },
+                        ],
+                      }}
+                      value={parseFloat(apiResponse.Current_3)}
+                      maxValue={360}
+                      minValue={0}
 
-                      />
+                    />
                   </div>
                   <p class="font">Amp</p>
                 </Box>

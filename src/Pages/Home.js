@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Backdrop, Box, Typography, } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Box, Typography, } from "@mui/material";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import ariaLogo from '../Images/ariaLogo.png';
-import homefontfont from '../Guage.css'
 import NavBar from '../NavBar';
-import background from '../Images/background.png';
 import CustomTempGauge from '../Components/CustomGauge';
 import VibPage from './VibPage';
 
@@ -15,24 +11,13 @@ class Home extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
-    const myStyle = {
-      backgroundImage: `url(${background})`,
-      minHeight: "100vh", // Full viewport height
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      overflowX: "hidden",
-      overflowY: "hidden"
-    };
 
     return (
 
       <div className='Home'>
-
-        <div style={myStyle}>
+        <div class="myStyle">
           <NavBar></NavBar>
           <div class="row">
             <div class="col-3"></div>
@@ -94,7 +79,7 @@ class Home extends Component {
                 <Typography variant="h3" fontWeight="600" color={"#FFFFFF"}>
                   Past 24Hr Alarms
                 </Typography>
-                  
+
               </Box>
             </div>
 
