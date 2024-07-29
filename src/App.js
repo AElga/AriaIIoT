@@ -16,46 +16,35 @@ import PredictiveAlarm from './Pages/PredictiveAlarm';
 import Performance from './Performance';
 
 
-document.addEventListener("contextmenu", function (event) {
-  alert("Inspect Elements Not Allowed");
-  event.preventDefault();
-})
-document.addEventListener("keydown", function (event) {
-  if (event.key === "F12" ||
-      (event.ctrlKey && event.shiftKey && event.key === "I") ||
-      (event.ctrlKey && event.shiftKey && event.key === "J") ||
-      (event.ctrlKey && event.key === "U")) {
-      alert("Inspect Elements Not Allowed");
-      event.preventDefault();
-  }
-})
-
-var devtoolsOpen = false;
-var threshold = 160;
-setInterval(function () {
-  if ((window.outerWidth - window.innerWidth) > threshold ||
-      (window.outerHeight - window.innerHeight) > threshold) {
-      if (!devtoolsOpen) {
-          devtoolsOpen = true;
-          alert("Developer Tools Detected. Please close them.");
-      }
-  } else {
-      devtoolsOpen = false;
-  }
-}, 1000)
-
-
-
-// class Start extends Comment {
-//   constructor(props) {
-//     super(props);
+// document.addEventListener("contextmenu", function (event) {
+//   alert("Inspect Elements Not Allowed");
+//   event.preventDefault();
+// })
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "F12" ||
+//       (event.ctrlKey && event.shiftKey && event.key === "I") ||
+//       (event.ctrlKey && event.shiftKey && event.key === "J") ||
+//       (event.ctrlKey && event.key === "U")) {
+//       alert("Inspect Elements Not Allowed");
+//       event.preventDefault();
 //   }
-//   render() {
-//     return (
-      
-//     );
+// })
+
+// var devtoolsOpen = false;
+// var threshold = 160;
+// setInterval(function () {
+//   if ((window.outerWidth - window.innerWidth) > threshold ||
+//       (window.outerHeight - window.innerHeight) > threshold) {
+//       if (!devtoolsOpen) {
+//           devtoolsOpen = true;
+//           alert("Developer Tools Detected. Please close them.");
+//       }
+//   } else {
+//       devtoolsOpen = false;
 //   }
-// }
+// }, 1000)
+
+
 
 const App = () => {
 
