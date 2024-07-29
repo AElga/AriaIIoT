@@ -46,16 +46,6 @@ setInterval(function () {
 
 
 
-// class Start extends Comment {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     return (
-
-//     );
-//   }
-// }
 
 const App = () => {
 
