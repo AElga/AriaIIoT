@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import ariaLogo from './ariaLogo.png';
+import ariaLogo from './Images/ariaLogo.png';
 import './Guage.css';
 
 const NavBar = () => {
@@ -25,7 +25,7 @@ const NavBar = () => {
                 <h4 className="font"></h4>
               </a>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="predictiveDropdown">
-                <li><NavLink className="dropdown-item" to="/PredictivePage">Predictive Page</NavLink></li>
+                {/* <li><NavLink className="dropdown-item" to="/PredictivePage">Predictive Page</NavLink></li> */}
                 <li><NavLink className="dropdown-item" to="/PredictiveAlarm">Predictive Alarm</NavLink></li>
               </ul>
             </div>
@@ -37,7 +37,7 @@ const NavBar = () => {
                 <h4 className="font"></h4>
               </a>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="energyDropdown">
-                <li><NavLink className="dropdown-item" to="/EnergyPage">Energy Page</NavLink></li>
+                {/* <li><NavLink className="dropdown-item" to="/EnergyPage">Energy Page</NavLink></li> */}
                 <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
               </ul>
             </div>
@@ -59,18 +59,18 @@ const NavBar = () => {
           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
           <button className="btn btn-outline-light btn-bg-dark" type="submit">Search</button>
         </form>
-        
+
         <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-  <img src ="https://cdn3.iconfinder.com/data/icons/user-interface-798/32/User_interface_user_person_avatar_customer_interface-512.png" alt="User Icon" width="20" height="20" class="me-2" />
-  User  
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark">
-    <li><a class="dropdown-item active" href="/">Log out</a></li>
-  </ul>
-</div>
-        
-      </div>  
+          <button class="btn btn-secondary dropdown-toggle me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://cdn3.iconfinder.com/data/icons/user-interface-798/32/User_interface_user_person_avatar_customer_interface-512.png" alt="User Icon" width="20" height="20" class="me-2" />
+            User
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item active" href="/">Log out</a></li>
+          </ul>
+        </div>
+
+      </div>
     </nav>
   );
 }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 import GaugeComponent from 'react-gauge-component'
-import guage from './Guage.css'
-import font from './Guage.css'
+import guage from '../Guage.css'
+import font from '../Guage.css'
 import { blue } from '@mui/material/colors';
-import background from './background.png';
+import background from '../Images/background.png';
 import CanvasJSReact from '@canvasjs/react-charts';
 
 class PredictiveAlarm extends Component {
@@ -16,6 +16,7 @@ class PredictiveAlarm extends Component {
       apiResponse: {},
       messages: [],
       stateChangeTimes: {},
+      dangerHistory: [],
     };
     this.callAPI = this.callAPI.bind(this);  }
 
@@ -30,7 +31,7 @@ class PredictiveAlarm extends Component {
   }
 
   updateStateChangeTimes(newApiResponse) {
-    const { stateChangeTimes, apiResponse } = this.state;
+    const { stateChangeTimes, apiResponse , dangerHistory} = this.state;
     const newStateChangeTimes = { ...stateChangeTimes };
 
     const ranges = {
@@ -60,10 +61,13 @@ class PredictiveAlarm extends Component {
       const oldState = getState(key, apiResponse[key]);
       if (newState !== oldState) {
         newStateChangeTimes[key] = new Date().toLocaleString();
+        if (newState === 'Danger') {
+          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState});
+        }
       }
     });
 
-    this.setState({ stateChangeTimes: newStateChangeTimes });
+    this.setState({ stateChangeTimes: newStateChangeTimes , dangerHistory });
   }
 
 
@@ -93,7 +97,7 @@ class PredictiveAlarm extends Component {
  
 
   render() {
-    const { apiResponse, stateChangeTimes } = this.state;
+    const { apiResponse, stateChangeTimes , dangerHistory} = this.state;
     const myStyle = {
       backgroundImage: `url(${background})`,
       minHeight: "100vh", // Full viewport height
@@ -147,10 +151,49 @@ class PredictiveAlarm extends Component {
         <NavBar></NavBar>
         <header className="PredictiveAlarm-header">
         <br></br>
-        <div className="table-container">
-        <table className="table table-striped table-hover bordered-table">
+        <h2 className="table-title">Maintenance Alarms</h2>
+
+        <div className="table-height">
+        <table className="table table-hover bordered-table blurred-table">
   <thead>
-    <tr>
+    <tr className='first-row'>
+      <th scope="col">#</th>
+      <th scope="col">Time</th>
+      <th scope="col">Keys</th>
+      <th scope="col">Description</th>
+      <th scope="col">Value</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+  {dangerHistory.map((entry, index) => {
+
+          const rowClass = entry.state === "Danger" ? "danger-row" : entry.state === "Warning" ? "warning-row" : "normal-row";
+          const stateImg = entry.state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }}/> : entry.state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }} 
+          />: "";
+
+          return(
+                    <tr key={index}>
+                      <th scope="row" style={{color: "#ffffff"}}>{index + 1}</th>
+                      <td className={rowClass}>{entry.time}</td>
+                      <td className={rowClass}>{entry.key}</td>
+                      <td className={rowClass}>{descriptions[entry.key]}</td>
+                      <td className={rowClass}>{entry.value}</td>
+                      <td className={rowClass}>{stateImg} {entry.state}</td>
+
+                    </tr>
+                )
+  })}
+  </tbody>
+</table>
+</div>
+        <br></br>
+        <h2 className="table-title">Maintenance Status</h2>
+
+        <div className="table-container">
+        <table className="table table-hover bordered-table blurred-table">
+  <thead>
+    <tr className='first-row'>
       <th scope="col">#</th>
       <th scope="col">Time</th>
       <th scope="col">Alarms</th>
@@ -163,6 +206,8 @@ class PredictiveAlarm extends Component {
   {keys.map((key, index) => {
                   const state = getState(key, apiResponse[key]);
                   const rowClass1 = state === "Danger" ? "danger-row" : state === "Warning" ? "warning-row" : "normal-row";
+                  const stateImg = state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }}/> : state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }} 
+                  />: "";
 
                   return (
                     <tr key={index}>
@@ -171,7 +216,7 @@ class PredictiveAlarm extends Component {
                       <td className={rowClass1}>{key}</td>
                       <td className={rowClass1}>{descriptions[key]}</td>
                       <td className={rowClass1}>{apiResponse[key]}</td>
-                      <td className={rowClass1}>{state}</td>
+                      <td className={rowClass1}>{stateImg} {state}</td>
                     </tr>
                   );
                 })}

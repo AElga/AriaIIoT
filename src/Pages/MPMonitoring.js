@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
+import background from '../Images/background.png';
 class MPMonitoring extends Component {
   constructor(props) {
     super(props);
@@ -44,16 +45,27 @@ class MPMonitoring extends Component {
 
   render() {
     const { apiResponse, messages } = this.state;
-
+    const myStyle = {
+      backgroundImage: `url(${background})`,
+      minHeight: "100vh", // Full viewport height
+      backgroundSize: "cover",
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      overflowX: "hidden",
+      overflowY: "hidden",
+      margin: '0 auto',
+      // maxWidth: '1200px'
+    };
     return (
-      
+
       <div className="MP">
-        <NavBar></NavBar>
-        <header className="MP-header">
-          <h1>MP measurements</h1>
-          <p>{apiResponse}</p>
-        </header>
-      </div>
+        <div style={myStyle}><NavBar></NavBar>
+          <header className="MP-header">
+            <h1 class="font">MP measurements</h1>
+            <p class="font">{apiResponse}</p>
+          </header>
+        </div></div>
     );
   }
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
-import NavBar from './NavBar';
-import './Guage.css'
-import background from './background.png';
+import NavBar from '../NavBar';
+import '../Guage.css'
+import background from '../Images/background.png';
 
 class EnergyAlarm extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class EnergyAlarm extends Component {
       apiResponse: {},
       messages: [],
       stateChangeTimes: {},
+      dangerHistory: [],
     };
     this.callAPI = this.callAPI.bind(this);  }
 
@@ -27,17 +28,17 @@ class EnergyAlarm extends Component {
 
 
   updateStateChangeTimes(newApiResponse) {
-    const { stateChangeTimes, apiResponse } = this.state;
+    const { stateChangeTimes, apiResponse , dangerHistory} = this.state;
     const newStateChangeTimes = { ...stateChangeTimes };
 
     const ranges = {
-      V12: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
-      V23: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
-      V31: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
+      V12: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
+      V23: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
+      V31: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
       TotEnergy: {normal:[0,999] ,warning: [1000, 200], danger: [2001, Infinity] },
-      Current_1: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
-      Current_2: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
-      Current_3: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
+      Current_1: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
+      Current_2: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
+      Current_3: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
       Power: {normal: [0,99],warning: [100, 200], danger: [201, Infinity] },
     };
 
@@ -59,10 +60,16 @@ class EnergyAlarm extends Component {
       const oldState = getState(key, apiResponse[key]);
       if (newState !== oldState) {
         newStateChangeTimes[key] = new Date().toLocaleString();
+        if (newState === 'Danger') {
+          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState});
+        }
+        // if (newState === 'Warning') {
+        //   dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState});
+        // }
       }
     });
 
-    this.setState({ stateChangeTimes: newStateChangeTimes });
+    this.setState({ stateChangeTimes: newStateChangeTimes , dangerHistory});
   }
 
   componentDidMount() {
@@ -85,7 +92,6 @@ class EnergyAlarm extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
-    clearInterval(this.interval2);
     this.socket.off('update');
     this.socket.disconnect();
   }
@@ -93,7 +99,7 @@ class EnergyAlarm extends Component {
 
 
   render() {
-    const { apiResponse, stateChangeTimes } = this.state;
+    const { apiResponse, stateChangeTimes, dangerHistory} = this.state;
 
     const descriptions = {
         V12: "Displays Voltage between line 1 and line 2",
@@ -107,13 +113,13 @@ class EnergyAlarm extends Component {
       }
 
       const ranges = {
-        V12: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
-        V23: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
-        V31: {normal:[0,364] ,warning: [365, 369], danger: [370, Infinity] },
+        V12: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
+        V23: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
+        V31: {normal:[0,360] ,warning: [361, 369], danger: [370, Infinity] },
         TotEnergy: {normal:[0,999] ,warning: [1000, 200], danger: [2001, Infinity] },
-        Current_1: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
-        Current_2: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
-        Current_3: {normal:[0,99] ,warning: [100, 200], danger: [201, Infinity] },
+        Current_1: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
+        Current_2: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
+        Current_3: {normal:[0,39] ,warning: [40, 49], danger: [50, Infinity] },
         Power: {normal: [0,99],warning: [100, 200], danger: [201, Infinity] },
       };
 
@@ -150,35 +156,78 @@ class EnergyAlarm extends Component {
         <NavBar></NavBar>
         <header className="EnergyAlarm-header">
         <br></br>
-        <table className="table table-striped table-hover bordered-table">
+        <h2 className="table-title">Energy Alarms</h2>
+
+        <div className="table-height">
+        <table className="table table-hover bordered-table blurred-table">
   <thead>
-    <tr>
+    <tr className='first-row'>
       <th scope="col">#</th>
       <th scope="col">Time</th>
-      <th scope="col">Alarms</th>
+      <th scope="col">Keys</th>
       <th scope="col">Description</th>
       <th scope="col">Value</th>
-      <th scope="col">Status</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+  {dangerHistory.map((entry, index) => {
+
+          const rowClass = entry.state === "Danger" ? "danger-row" : entry.state === "Warning" ? "warning-row" : "normal-row";
+          const stateImg = entry.state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }}/> : entry.state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }} 
+          />: "";
+
+          return(
+                    <tr key={index}>
+                      <th scope="row" style={{color: "#ffffff"}}>{index + 1}</th>
+                      <td className={rowClass}>{entry.time}</td>
+                      <td className={rowClass}>{entry.key}</td>
+                      <td className={rowClass}>{descriptions[entry.key]}</td>
+                      <td className={rowClass}>{entry.value}</td>
+                      <td className={rowClass}>{stateImg} {entry.state}</td>
+
+                    </tr>
+                )
+  })}
+  </tbody>
+</table>
+</div>
+        <br></br>
+        <h2 className="table-title">Energy Status</h2>
+
+        <div className="table-container">
+        <table className="table table-hover bordered-table blurred-table">
+  <thead>
+    <tr className='first-row'>
+      <th scope="col">#</th>
+      <th scope="col">Time</th>
+      <th scope="col">Keys</th>
+      <th scope="col">Description</th>
+      <th scope="col">Value</th>
+      <th scope="col">State</th>
     </tr>
   </thead>
   <tbody>
   {keys.map((key, index) => {
                   const state = getState(key, apiResponse[key]);
                   const rowClass = state === "Danger" ? "danger-row" : state === "Warning" ? "warning-row" : "normal-row";
+                  const stateImg = state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }}/> : state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight:'2px', paddingBottom:'3px' }} 
+                  />: "";
 
                   return (
                     <tr key={index}>
-                      <th className={rowClass} scope="row">{index + 1}</th>
+                      <th scope="row" style={{color: "#ffffff"}}>{index + 1}</th>
                       <td className={rowClass}>{stateChangeTimes[key] || 'N/A'}</td>
                       <td className={rowClass}>{key}</td>
                       <td className={rowClass}>{descriptions[key]}</td>
                       <td className={rowClass}>{apiResponse[key]}</td>
-                      <td className={rowClass}>{state}</td>
+                      <td className={rowClass}>{stateImg} {state}</td>
                     </tr>
                   );
                 })}
   </tbody>
 </table>
+</div>
         </header>
         </div>
       </div>

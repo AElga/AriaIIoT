@@ -75,28 +75,74 @@
 .table-container {
   position: relative;
   width: 90%;
-  background: rgba(255, 255, 255, 0.3); 
+  /* background: rgba(255, 255, 255, 0.3);  */
   /* Semi-transparent background */
   backdrop-filter: blur(10px); /* Adjust the blur value as needed */
   /* border-radius: 10px;  */
   /* Optional: for rounded corners */
   margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
 }
+.table-height {
+  position: relative;
+  width: 90%;
+  /* background: rgba(255, 255, 255, 0.3);  */
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  /* border-radius: 10px;  */
+  /* Optional: for rounded corners */
+  margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
 
 .table {
   width: 100%;
   border-collapse: collapse;
 }
 
+.blurred-table {
+  background: rgba(255, 255, 255, 0.1); 
+  /* Slight white tint */
+  backdrop-filter: blur(10px); 
+  /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px); 
+  /* Support for Safari */
+  color: white; /* Set text color to white for better contrast */
+  border: 3px solid black; 
+  /* Add outer border */
+  border-collapse: collapse;
+   /* Ensure borders are combined */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.first-row {
+  position: sticky;
+  top: 0;
+  color: black !important;
+  background-color: rgba(255, 255, 255 , 0.4);  /* Ensure the background color matches the table or page background */
+  z-index: 2; /* Ensures the header stays on top of the scrolling content */
+
+}
+
 .table th,
 .table td {
   padding: 8px;
   text-align: left;
+  background: none !important; /* Remove default white background */
+
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  color: black !important;
+  background-color: rgba(255, 255, 255 , 0.4);  /* Ensure the background color matches the table or page background */
+  z-index: 2; /* Ensures the header stays on top of the scrolling content */
 }
 
 .table th {
-  background: rgba(0, 0, 0, 0.2); /* Optional: darken header background */
-  color: white;
+  background: rgba(0, 0, 0, 0.2); 
+  /* Optional: darken header background */
+  /* color: white; */
 }
 
 .table td {
@@ -112,7 +158,14 @@
 }
 
 .normal-row {
-  color: black !important;
+  color: white !important;
 }
 
 
+.table-title {
+  font-size: 26px; /* Adjust font size as needed */
+  font-weight: bold; /* Optional: make the title bold */
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space between title and table */
+  color: #fff; /* Optional: change the color */
+}
