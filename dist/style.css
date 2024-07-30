@@ -1,57 +1,56 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
-.body1 {
+body {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 15px;
   line-height: 1.7;
   color: #000000;
-  background: url('/src/Images/background.png') no-repeat center center fixed;
+  background: url('C:/Users/dell/Downloads/log-in-sign-uppure-css12/log-in-sign-uppure-css12/dist/background.png') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
-.a1 {
+a {
   cursor: pointer;
   transition: all 200ms linear;
 }
 
-.a1:hover {
+a:hover {
   text-decoration: none;
 }
 
-.link1 {
+.link {
   color: #000dff;
 }
 
-.link1:hover {
+.link:hover {
   color: #000dff;
 }
 
-.p1 {
+p {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.7;
 }
 
-.h41 {
+h4 {
   font-weight: 600;
 }
 
-.h61 span {
+h6 span {
   padding: 0 20px;
   text-transform: uppercase;
   font-weight: 700;
 }
 
-.section1 {
+.section {
   position: relative;
   width: 100%;
   display: block;
 }
 
-.full-height1 {
+.full-height {
   min-height: 100vh;
 }
 
@@ -61,8 +60,8 @@
   left: -9999px;
 }
 
-.checkbox1:checked + label,
-.checkbox1:not(:checked) + label {
+.checkbox:checked + label,
+.checkbox:not(:checked) + label {
   position: relative;
   display: block;
   text-align: center;
@@ -75,8 +74,8 @@
   background-color: #ffffff;
 }
 
-.checkbox1:checked + label:before,
-.checkbox1:not(:checked) + label:before {
+.checkbox:checked + label:before,
+.checkbox:not(:checked) + label:before {
   position: absolute;
   display: block;
   width: 36px;
@@ -95,11 +94,11 @@
   transition: all 0.5s ease;
 }
 
-.checkbox1:checked + label:before {
+.checkbox:checked + label:before {
   transform: translateX(44px) rotate(-270deg);
 }
 
-.card1-3d-wrap {
+.card-3d-wrap {
   position: relative;
   width: 440px;
   max-width: 100%;
@@ -110,7 +109,7 @@
   margin-top: 60px;
 }
 
-.card1-3d-wrapper {
+.card-3d-wrapper {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -121,7 +120,7 @@
   transition: all 600ms ease-out;
 }
 
-.card1-front, .card1-back {
+.card-front, .card-back {
   width: 100%;
   height: 100%;
   background-color: #ffffff;
@@ -140,15 +139,15 @@
   backface-visibility: hidden;
 }
 
-.card1-back {
+.card-back {
   transform: rotateY(180deg);
 }
 
-.checkbox1:checked ~ .card1-3d-wrap .card1-3d-wrapper {
+.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
   transform: rotateY(180deg);
 }
 
-.center1-wrap {
+.center-wrap {
   position: absolute;
   width: 100%;
   padding: 0 35px;
@@ -159,14 +158,14 @@
   display: block;
 }
 
-.form1-group {
+.form-group {
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
 }
 
-.form1-style {
+.form-style {
   padding: 13px 20px;
   padding-left: 55px;
   height: 48px;
@@ -185,14 +184,14 @@
   box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
 }
 
-.form1-style:focus,
-.form1-style:active {
+.form-style:focus,
+.form-style:active {
   border: none;
   outline: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 255, 0.2);
 }
 
-.input1-icon {
+.input-icon {
   position: absolute;
   top: 0;
   left: 18px;
@@ -205,59 +204,59 @@
   transition: all 200ms linear;
 }
 
-.form1-group input:-ms-input-placeholder {
+.form-group input:-ms-input-placeholder {
   color: #000dff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input::-moz-placeholder {
+.form-group input::-moz-placeholder {
   color: #000dff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input:-moz-placeholder {
+.form-group input:-moz-placeholder {
   color: #000dff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input::-webkit-input-placeholder {
+.form-group input::-webkit-input-placeholder {
   color: #000dff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input:focus:-ms-input-placeholder {
+.form-group input:focus:-ms-input-placeholder {
   opacity: 0;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input:focus::-moz-placeholder {
+.form-group input:focus::-moz-placeholder {
   opacity: 0;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input:focus:-moz-placeholder {
+.form-group input:focus:-moz-placeholder {
   opacity: 0;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.form1-group input:focus::-webkit-input-placeholder {
+.form-group input:focus::-webkit-input-placeholder {
   opacity: 0;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
-.btn1 {
+.btn {
   border-radius: 4px;
   height: 44px;
   font-size: 13px;
@@ -286,20 +285,20 @@
   box-shadow: 0 8px 24px 0 rgba(255, 235, 167, .2);
 }
 
-.btn1:active,
-.btn1:focus {
+.btn:active,
+.btn:focus {
   background-color: #2b00ff;
   color: #ffffff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
 }
 
-.btn1:hover {
+.btn:hover {
   background-color: #ffffff;
   color: #0000ff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
 }
 
-.logo1 {
+.logo {
   position: absolute;
   top: 30px;
   right: 30px;
@@ -308,23 +307,23 @@
   transition: all 250ms linear;
 }
 
-.logo1 img {
+.logo img {
   height: 26px;
   width: auto;
   display: block;
 }
 
-.large1-font {
+.large-font {
   font-size: 24px; /* Adjust the size as needed */
 }
 
-.button1-container {
+.button-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.btn1-custom {
+.btn-custom {
   background-color: #000000;
   color: #ffffff;
   border: 1px solid #ffffff;
@@ -337,9 +336,7 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.btn1-custom:hover {
+.btn-custom:hover {
   background-color: #ffffff;
   color: #000000;
 }
-
-
