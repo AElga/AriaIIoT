@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './style.css';
+import Verify from './Verify';
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -32,6 +33,7 @@ const Login = () => {
             .then(data => {
                 if (data.success) {
                     setShowVerification(true);
+                    window.location.replace("Verify")
                 } else {
                     setErrorMessage(data.message || "Authentication failed");
                 }
@@ -39,26 +41,7 @@ const Login = () => {
             .catch(err => setErrorMessage("Fetch error: " + err));
     };
 
-    const handleVerification = (event) => {
-        event.preventDefault();
-        setVerificationError("");
-        fetch('http://localhost:5000/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, code: verificationCode })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    navigate("/Home");
-                } else {
-                    setVerificationError(data.message || "Verification failed");
-                }
-            })
-            .catch(err => setVerificationError("Fetch error: " + err));
-    };
+    
 
     return (
         <div className='Login body1'>
@@ -102,33 +85,9 @@ const Login = () => {
                                                             <i className="input1-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         {errorMessage && <p className="text-danger">{errorMessage}</p>}
-                                                        <button type="submit" className="a1 btn1 mt-4">Submit</button>
+                                                        <button type="submit" className="a1 btn1 mt-4" >Submit</button>
                                                         <p className="p1 mb-0 mt-4 text-center"><a href="#forgot-password" className="link">Forgot Password?</a></p>
                                                         <p className="p1 mb-0 mt-4 text-center"><a href="/SignUp" className="link">Create New Account</a></p>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card1-back">
-                                            <div className="center1-wrap">
-                                                <div className="section1 text-center">
-                                                    <h4 className="h41 mb-4 pb-3">Verify Code</h4>
-                                                    <form onSubmit={handleVerification}>
-                                                        <div className="form1-group">
-                                                            <input
-                                                                type="text"
-                                                                name="verificationCode"
-                                                                className="form1-style"
-                                                                placeholder="Enter Verification Code"
-                                                                id="verificationCode"
-                                                                autoComplete="off"
-                                                                value={verificationCode}
-                                                                onChange={(e) => setVerificationCode(e.target.value)}
-                                                            />
-                                                            <i className="input1-icon uil uil-check-circle"></i>
-                                                        </div>
-                                                        {verificationError && <p className="text-danger">{verificationError}</p>}
-                                                        <button type="submit" className="a1 btn1 mt-4">Verify</button>
                                                     </form>
                                                 </div>
                                             </div>

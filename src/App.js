@@ -11,6 +11,7 @@ import EnergyMonitoring from './Pages/EnergyMonitoring';
 import MPMonitoring from './Pages/MPMonitoring';
 import EnergyAlarm from './Pages/EnergyAlarm'
 import SignUp from './Login/SignUp';
+import Verify from './Login/Verify'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PredictiveAlarm from './Pages/PredictiveAlarm';
 
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/MP" element={<MPMonitoring />} exact/>
           <Route path="/EnergyAlarm" element={<EnergyAlarm/>} exact/>
           <Route path="/PredictiveAlarm" element={<PredictiveAlarm/>} exact/>
+          <Route path="/Verify" element={<Verify/>} exact/>
 
           </Routes>
           </BrowserRouter>
