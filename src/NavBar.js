@@ -25,7 +25,6 @@ const NavBar = () => {
                 <h4 className="font"></h4>
               </a>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="predictiveDropdown">
-                {/* <li><NavLink className="dropdown-item" to="/PredictivePage">Predictive Page</NavLink></li> */}
                 <li><NavLink className="dropdown-item" to="/PredictiveAlarm">Predictive Alarm</NavLink></li>
               </ul>
             </div>
@@ -37,10 +36,21 @@ const NavBar = () => {
                 <h4 className="font"></h4>
               </a>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="energyDropdown">
-                {/* <li><NavLink className="dropdown-item" to="/EnergyPage">Energy Page</NavLink></li> */}
                 <li><NavLink className="dropdown-item" to="/EnergyAlarm">Energy Alarm</NavLink></li>
               </ul>
             </div>
+            <NavLink className="nav-link ms-4" to="/Performance">
+              <h4 className="font">Performance Monitoring</h4>
+            </NavLink>
+            {/* <div className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="performanceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <h4 className="font"></h4>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="performanceDropdown">
+                <li><NavLink className="dropdown-item" to="/PerformancePage">Performance Page</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/PerformanceAlarm">Performance Alarm</NavLink></li>
+              </ul>
+            </div> */}
             {/* <NavLink className="nav-link ms-4" to="/MP">
               <h4 className="font">Performance Monitoring</h4>
             </NavLink>

@@ -4,9 +4,21 @@
   
   }
 
+  .myStyle {
+    background-image: url('/src/Images/background.png');
+    min-height: 100vh;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
   .font {
     color: #FFF;
     justify-content: center;
+    font-size: 22px;
   }
   .homefont {
     font-size: 26px;

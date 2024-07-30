@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Backdrop, Box, Typography, } from "@mui/material";
+import { Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from '../NavBar';
 // import Chart from 'chart.js';
 import GaugeComponent from 'react-gauge-component'
-import guage from '../Guage.css'
-import font from '../Guage.css'
-import background from '../Images/background.png';
-// import { Line } from "react-chartjs-2";
-// import "chartjs-plugin-streaming";
+import CustomAnalogGauge from '../Components/CustomGauge2';
 import CanvasJSReact from '@canvasjs/react-charts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -127,20 +123,22 @@ class EnergyMonitoring extends Component {
 
   render() {
 
-    const myStyle = {
-      backgroundImage: `url(${background})`,
-      minHeight: "100vh", // Full viewport height
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      overflowX: "hidden",
-      overflowY: "hidden",
-      margin: '0 auto',
-      // maxWidth: '1200px'
-    };
     const { apiResponse, messages } = this.state;
-
+    const dta = {value: parseFloat(apiResponse.Current_3), minv: '0', maxv: '360', arcs: [
+      { limit: 200, color: '#5BE12C', showTick: true },
+      { limit: 260, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },
+    ]}
+    const dta1 = {value: parseFloat(apiResponse.Current_2), minv: '0', maxv: '360', arcs: [
+      { limit: 200, color: '#5BE12C', showTick: true },
+      { limit: 260, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },
+    ]}
+    const dta2 = {value: parseFloat(apiResponse.Current_4), minv: '0', maxv: '360', arcs: [
+      { limit: 200, color: '#5BE12C', showTick: true },
+      { limit: 260, color: '#F5CD19', showTick: true },
+      { limit: 360, color: '#EA4228', showTick: true },
+    ]}
     const options = {
       title: {
         text: "Current Measurement",
@@ -283,7 +281,7 @@ class EnergyMonitoring extends Component {
 
       <div className="Energy">
 
-        <div style={myStyle}><NavBar></NavBar>
+        <div class="myStyle"><NavBar></NavBar>
           <header className="Energy-header" >
             <br></br><br></br>
             <div class="row">
@@ -384,21 +382,23 @@ class EnergyMonitoring extends Component {
 
                   <div className="guage">
 
-                      <GaugeComponent
-                        arc={{
-                          subArcs: [
-                            { limit: 0, color: '#', showTick: true },
-                            { limit: 200, color: '#5BE12C', showTick: true },
-                            { limit: 260, color: '#F5CD19', showTick: true },
-                            { limit: 360, color: '#EA4228', showTick: true },
-                          ],
-                        }}
-                        value={parseFloat(apiResponse.Current_3)}
-                        maxValue={360}
-                        minValue={0}
+                    {/* <GaugeComponent
+                      arc={{
+                        subArcs: [
+                          { limit: 0, color: '#', showTick: true },
+                          { limit: 200, color: '#5BE12C', showTick: true },
+                          { limit: 260, color: '#F5CD19', showTick: true },
+                          { limit: 360, color: '#EA4228', showTick: true },
+                        ],
+                      }}
+                      value={parseFloat(apiResponse.Current_3)}
+                      maxValue={360}
+                      minValue={0}
 
-                      />
+                    /> */}
+                    <CustomAnalogGauge dta={dta} />
                   </div>
+                  <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>
@@ -425,7 +425,7 @@ class EnergyMonitoring extends Component {
                   </Typography>
                   <div className="guage">
 
-                    <GaugeComponent
+                    {/* <GaugeComponent
                       arc={{
                         subArcs: [
                           { limit: 0, color: '#', showTick: true },
@@ -438,8 +438,10 @@ class EnergyMonitoring extends Component {
                       maxValue={360}
                       minValue={0}
 
-                    />
+                    /> */}
+                    <CustomAnalogGauge dta={dta1} />
                   </div>
+                  <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>
@@ -468,7 +470,7 @@ class EnergyMonitoring extends Component {
                   </Typography>
                   <div className="guage">
 
-                    <GaugeComponent
+                    {/* <GaugeComponent
                       arc={{
                         subArcs: [
                           { limit: 0, color: '#', showTick: true },
@@ -481,8 +483,10 @@ class EnergyMonitoring extends Component {
                       maxValue={360}
                       minValue={0}
 
-                    />
+                    /> */}
+                    <CustomAnalogGauge dta={dta2} />
                   </div>
+                  <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>

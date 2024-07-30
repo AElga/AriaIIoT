@@ -4,17 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import GaugeComponent from 'react-gauge-component';
 
-const CustomGauge2 = ({ value }) => {
+const CustomAnalogGauge = ({ dta={value: '0', minv: '0', maxv: '360', arcs: [
+  { limit: 0, color: '#', showTick: true },
+                          { limit: 101, color: '#5BE12C', showTick: true },
+                          { limit: 256, color: '#F5CD19', showTick: true },
+                          { limit: 360, color: '#EA4228', showTick: true },
+] }}) => {
   const [showModal, setShowModal] = useState(false);
-  const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(360);
+  const [minValue, setMinValue] = useState(dta.minv);
+  const [maxValue, setMaxValue] = useState(dta.maxv);
 
   // Actual state for subArcs used in GaugeComponent
-  const [subArcs, setSubArcs] = useState([
-    { limit: 125, color: '#5BE12C', tooltip: 'Low Velocity', showTick: true },
-    { limit: 253, color: '#F5CD19', tooltip: 'Medium Velocity', showTick: true },
-    { limit: 325, color: '#EA4228', tooltip: 'High Velocity', showTick: true },
-  ]);
+  const [subArcs, setSubArcs] = useState(dta.arcs);
 
   // Temporary state for form inputs
   const [tempSubArcs, setTempSubArcs] = useState([...subArcs]);
@@ -82,7 +83,7 @@ const CustomGauge2 = ({ value }) => {
               showTick: arc.showTick,
             })),
           }}
-          value={value} // Value passed from the parent component
+          value={dta.value} // Value passed from the parent component
           maxValue={maxValue}
           minValue={minValue}
         />
@@ -93,6 +94,7 @@ const CustomGauge2 = ({ value }) => {
           </Modal.Header>
           <Modal.Body>
             Please use the arrows on the right side to change values. Please do not change limit 3.
+            <hr />
             <Form>
               <Form.Group controlId="minValue">
                 <Form.Label>Min Value</Form.Label>
@@ -156,4 +158,4 @@ const CustomGauge2 = ({ value }) => {
   );
 }
 
-export default CustomGauge2;
+export default CustomAnalogGauge;
