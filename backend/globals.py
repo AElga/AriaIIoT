@@ -1,7 +1,7 @@
 topics = [] #used for duplicate detection
 allData = []
 
-TempUsername = "FadlAllah@Alhamdulilah.rab"
+TempUsername = "ahmedkhorshud2001@gmail.com"
 TempPass = "NodeRedSucks"
 LoggedIn = False
 
