@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Backdrop, Box, Typography, } from "@mui/material";
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import ariaLogo from './Images/ariaLogo.png';
-import NavBar from './NavBar';
-import background from './Images/background.png';
+import NavBar from '../NavBar';
+import background from '../Images/background.png';
 import { TextField } from '@mui/material';
 
 class Performance extends Component {

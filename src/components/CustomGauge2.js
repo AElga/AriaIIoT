@@ -94,6 +94,7 @@ const CustomAnalogGauge = ({ dta={value: '0', minv: '0', maxv: '360', arcs: [
           </Modal.Header>
           <Modal.Body>
             Please use the arrows on the right side to change values. Please do not change limit 3.
+            <hr />
             <Form>
               <Form.Group controlId="minValue">
                 <Form.Label>Min Value</Form.Label>
