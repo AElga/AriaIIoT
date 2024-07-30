@@ -1,0 +1,183 @@
+.guage {
+    width: 400px;  /* Set your desired width */
+    height: 190px; /* Set your desired height */
+  
+  }
+
+  .myStyle {
+    background-image: url('/src/Images/background.png');
+    min-height: 100vh;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  .font {
+    color: #FFF;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .homefont {
+    font-size: 26px;
+    color: #FFF;
+    justify-content: center;
+  }
+  
+  /* Dropdown arrow color */
+.navbar .nav-link.dropdown-toggle::after {
+  border-top: 0.3em solid #FFFFFF;  /* Ensure this is the color you want */
+  border-right: 0.3em solid transparent;
+  border-left: 0.3em solid transparent;
+  border-bottom: 0;
+}
+
+/* Underline for the current tab */
+.navbar .nav-link.active {
+  border-bottom: 2px solid #FFFFFF; /* Adjust the thickness as needed */
+}
+.navbar .nav-link:hover {
+  border-bottom: 2px solid #FFFFFF; /* Adjust the thickness as needed */
+}
+.title1{
+  font-size: 220%;
+  color: #FFF;
+  font-weight:650;
+}
+.value1{
+  font-size: 180%;
+  margin-top: -2%;
+  color: #FFF;
+  font-weight:500;
+}
+.title2{
+  font-size: 230%;
+  color: #FFF;
+  /* margin-bottom: 80px; */
+  font-weight:650;
+}
+.box {
+  width: 100%;
+  max-width: 400px;
+  margin: 16px auto;
+  padding: 16px;
+  border: 2px solid #333333;
+  box-shadow: 4px 7px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  background-color: #156B998C;
+}
+@media (max-width: 600px) {
+  .Energy-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .col {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  
+  .col-4 {
+    width: 100% !important;
+  }
+}
+
+.table-container {
+  position: relative;
+  width: 90%;
+  /* background: rgba(255, 255, 255, 0.3);  */
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  /* border-radius: 10px;  */
+  /* Optional: for rounded corners */
+  margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
+}
+.table-height {
+  position: relative;
+  width: 90%;
+  /* background: rgba(255, 255, 255, 0.3);  */
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  /* border-radius: 10px;  */
+  /* Optional: for rounded corners */
+  margin: 0 70px; /* Add margins to the left and right (adjust as needed) */
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.blurred-table {
+  background: rgba(255, 255, 255, 0.1); 
+  /* Slight white tint */
+  backdrop-filter: blur(10px); 
+  /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px); 
+  /* Support for Safari */
+  color: white; /* Set text color to white for better contrast */
+  border: 3px solid black; 
+  /* Add outer border */
+  border-collapse: collapse;
+   /* Ensure borders are combined */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.first-row {
+  position: sticky;
+  top: 0;
+  color: black !important;
+  background-color: rgba(255, 255, 255 , 0.4);  /* Ensure the background color matches the table or page background */
+  z-index: 2; /* Ensures the header stays on top of the scrolling content */
+
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  background: none !important; /* Remove default white background */
+
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  color: black !important;
+  background-color: rgba(255, 255, 255 , 0.4);  /* Ensure the background color matches the table or page background */
+  z-index: 2; /* Ensures the header stays on top of the scrolling content */
+}
+
+.table th {
+  background: rgba(0, 0, 0, 0.2); 
+  /* Optional: darken header background */
+  /* color: white; */
+}
+
+.table td {
+  color: black;
+}
+
+.danger-row {
+  color: red !important;
+}
+
+.warning-row {
+  color: yellow !important;
+}
+
+.normal-row {
+  color: white !important;
+}
+
+
+.table-title {
+  font-size: 26px; /* Adjust font size as needed */
+  font-weight: bold; /* Optional: make the title bold */
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space between title and table */
+  color: #fff; /* Optional: change the color */
+}
