@@ -1,6 +1,10 @@
-topics = [] #used for duplicate detection
-allData = []
 
+
+topics = [] #used for duplicate detection
+allData = [] #save all the data from different topics
+
+
+#variables for authentication
 TempUsername = "ahmedkhorshud2001@gmail.com"
 TempPass = "NodeRedSucks"
 LoggedIn = False

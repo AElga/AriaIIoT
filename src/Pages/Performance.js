@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Backdrop, Box, Typography, } from "@mui/material";
+import { Box, Typography, } from "@mui/material";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import NavBar from '../NavBar';
 import background from '../Images/background.png';
 import { TextField } from '@mui/material';
+
+//Performance monitoring aims to display details about the linear robot itself
+//to users, including robot status, cycle number, and a 3D model of the robot
 
 class Performance extends Component {
     constructor(props) {
@@ -13,8 +16,7 @@ class Performance extends Component {
             cycleNumber: 0,
             cycleTime: 0,
             robotStatus: 0,
-                };
-
+        };
         // Bind the handleChange method
         this.handleChange = this.handleChange.bind(this);
     }
@@ -36,9 +38,7 @@ class Performance extends Component {
         };
 
         return (
-
             <div className='Performance'>
-
                 <div style={myStyle}>
                     <NavBar></NavBar>
                     <br></br>
@@ -49,10 +49,8 @@ class Performance extends Component {
                                 gridColumn="span 4"
                                 display="flex"
                                 alignItems="center"
-                                // justifyContent="center"
-                                // flexDirection="column"
-                                borderRadius="8px" // Adjust the radius as needed
-                                padding="10px" // Optional: Add padding to provide spacing inside the box
+                                borderRadius="8px"
+                                padding="10px"
                                 border="2px solid #333333" // White borders
                                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                                 marginLeft={{ xs: "0px", sm: "74px" }}
@@ -62,8 +60,6 @@ class Performance extends Component {
                             >
                                 <Box
                                     width="100%" // Make the inner Box take the full width
-                                    // display="flex"
-                                    // justifyContent="flex-start"
                                 >
                                     <Typography className='title1' fontWeight="400" fontSize={"22px"}>
                                         Cycle Number
@@ -73,9 +69,9 @@ class Performance extends Component {
                                     type="number"
                                     value={this.state.cycleNumber}
                                     onChange={(e) => this.handleChange(e, 'cycleNumber')}
-                                    
-                                    inputProps={{ min: 0 }} // Optional: Set the minimum value
-                                    variant="outlined" // Optional: Change the variant if needed
+
+                                    inputProps={{ min: 0 }}
+                                    variant="outlined"
                                     sx={{
                                         color: '#FFFFFF',
                                         backgroundColor: 'transparent', // Make the background transparent
@@ -95,37 +91,29 @@ class Performance extends Component {
                                         '& .MuiInputBase-input': {
                                             color: '#FFFFFF', // Change the color of the input value to white
                                             fontSize: '22px', // Increase the font size
-                                            //   textAlign: 'Left', // Center align the text
                                             paddingRight: '5px',
                                         },
                                     }}
                                 />
-
-
                             </Box>
                         </div>
-
                         <div class="col">
                             <Box
                                 backgroundColor={"#156B998C"}
                                 gridColumn="span 4"
                                 display="flex"
                                 alignItems="center"
-                                //   justifyContent="center"
-                                //   flexDirection="column"
-                                borderRadius="8px" // Adjust the radius as needed
-                                padding="10px" // Optional: Add padding to provide spacing inside the box
+                                borderRadius="8px"
+                                padding="10px"
                                 border="2px solid #333333" // White borders
                                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                                 marginLeft={{ xs: "0px", sm: "74px" }}
                                 width={{ xs: "100%", sm: "400px" }}
                                 height={{ xs: "100%", sm: "70px" }}
-
                                 mb={2}
                             >
                                 <Box
                                     width="100%" // Make the inner Box take the full width
-
                                 >
                                     <Typography className='title1' fontWeight="400" fontSize={"22px"}>
                                         Cycle Time
@@ -135,8 +123,8 @@ class Performance extends Component {
                                     type="number"
                                     value={this.state.cycleTime}
                                     onChange={(e) => this.handleChange(e, 'cycleTime')}
-                                    inputProps={{ min: 0 }} // Optional: Set the minimum value
-                                    variant="outlined" // Optional: Change the variant if needed
+                                    inputProps={{ min: 0 }}
+                                    variant="outlined"
                                     sx={{
                                         color: '#FFFFFF',
                                         backgroundColor: 'transparent', // Make the background transparent
@@ -156,12 +144,10 @@ class Performance extends Component {
                                         '& .MuiInputBase-input': {
                                             color: '#FFFFFF', // Change the color of the input value to white
                                             fontSize: '25px', // Increase the font size
-                                            //   textAlign: 'Left', // Center align the text
                                             paddingRight: '5px',
                                         },
                                     }}
                                 />
-
                             </Box>
                         </div>
                         <div class="col">
@@ -170,16 +156,13 @@ class Performance extends Component {
                                 gridColumn="span 4"
                                 display="flex"
                                 alignItems="center"
-                                // justifyContent="center"
-                                // flexDirection="column"
-                                borderRadius="8px" // Adjust the radius as needed
-                                padding="10px" // Optional: Add padding to provide spacing inside the box
+                                borderRadius="8px"
+                                padding="10px"
                                 border="2px solid #333333" // White borders
                                 boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                                 marginLeft={{ xs: "0px", sm: "74px" }}
                                 width={{ xs: "100%", sm: "400px" }}
                                 height={{ xs: "100%", sm: "70px" }}
-
                                 mb={2}
                             >
                                 <Box
@@ -193,8 +176,8 @@ class Performance extends Component {
                                     type="number"
                                     value={this.state.robotStatus}
                                     onChange={(e) => this.handleChange(e, 'robotStatus')}
-                                    inputProps={{ min: 0 }} // Optional: Set the minimum value
-                                    variant="outlined" // Optional: Change the variant if needed
+                                    inputProps={{ min: 0 }}
+                                    variant="outlined"
                                     sx={{
                                         color: '#FFFFFF',
                                         backgroundColor: 'transparent', // Make the background transparent
@@ -214,18 +197,15 @@ class Performance extends Component {
                                         '& .MuiInputBase-input': {
                                             color: '#FFFFFF', // Change the color of the input value to white
                                             fontSize: '25px', // Increase the font size
-                                            //   textAlign: 'Left', // Center align the text
                                             paddingRight: '5px',
                                         },
                                     }}
                                 />
-
-
                             </Box>
                         </div>
-
                     </div>
-                    {/* <video width="520" height="440" controls>
+                    {/* To be implemented
+                    <video width="520" height="440" controls>
                     <source src="RobotVideo.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video> */}

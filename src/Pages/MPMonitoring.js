@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavBar from '../NavBar';
 import withAPI from '../withAPI';
 
+//MPMonitoring is one of the topics within Aria's topic tree. However, it is not used in this platform
+
 class MPMonitoring extends Component {
   render() {
     const { apiResponse, messages } = this.props;

@@ -5,20 +5,19 @@ import paho.mqtt.client as mqtt
 from mqtt_requests import extract_topic
 from flask_socketio import emit
 import app
-# import threading
+import threading
 
 message_count = 0
 
-# def reset_and_print_message_count():
-#     global message_count
-#     print(f"Messages received in the last minute: {message_count}")
-#     message_count = 0
-#     # Schedule this function to be called again after 60 seconds
-#     threading.Timer(60, reset_and_print_message_count).start()
+#function to understand the number of messages recieved in a minute
+def reset_and_print_message_count():
+    global message_count
+    print(f"Messages received in the last minute: {message_count}")
+    message_count = 0
+    # Schedule this function to be called again after 60 seconds
+    threading.Timer(60, reset_and_print_message_count).start()
 
-# Initialize the message count reset and print function
-# reset_and_print_message_count()
-
+# whenever the "subscribe" or "unsubscribe" method is called, process the following logic
 def on_subscribe(client, userdata, mid, reason_code_list, properties):
     # Since we subscribed only for a single channel, reason_code_list contains
     # a single entry
@@ -37,10 +36,8 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
     client.disconnect()
 
 
-
+#take a recieved message, parse it, and save it to the corresponding topic entry
 def on_message(client, userdata, message):
-    # global message_count
-    # message_count += 1
 
     topic = message.topic
     payload = message.payload.decode('utf-8')  # Decode payload if it's a string
@@ -48,8 +45,6 @@ def on_message(client, userdata, message):
     json_parser.parseJSON(payload, dict)
     #Debugging: 
     # print(f"Received message on topic {topic} ")
-    # counter= counter+1
-    # print(message_count)
     if not globals.topic_contains(topic, globals.topics):
         globals.topics.append(topic)
     for i, (t, _) in enumerate(userdata):
@@ -61,14 +56,7 @@ def on_message(client, userdata, message):
 
     extract_topic(userdata)
 
-    # app.send_update({'topic': topic, 'data': dict})
-
-    
-
-    # if len(globals.topics) >= 3:
-    #     client.unsubscribe("#")
-
-
+# once connected, start the subscription
 def on_connect(client, userdata, flags, reason_code, properties):
     if reason_code.is_failure:
         print(f"Failed to connect: {reason_code}. loop_forever() will retry connection")
@@ -78,15 +66,16 @@ def on_connect(client, userdata, flags, reason_code, properties):
         
         client.subscribe("#", qos=2)
 
+#initalize the client and set the functions
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 mqttc.on_subscribe = on_subscribe
 mqttc.on_unsubscribe = on_unsubscribe
 
+#sign in and start the server loop
 mqttc.user_data_set([])
 mqttc.username_pw_set("aria", "A?fB)N9)Ew'25C5Y")
 mqttc.connect("www.ariatechnologies-iiot.com", 1883, 60)
 mqttc.loop_start()
-# loop forever msh btshtaghal
 #Debugging: print(f"Received the following message: {mqttc.user_data_get()}")

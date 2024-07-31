@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import NavBar from '../NavBar';
-import '../Guage.css'
+import './Guage.css'
+
+//Energy Alarm Description
 
 class EnergyAlarm extends Component {
+  //Backend to Frontend logic
   constructor(props) {
     super(props);
     this.state = {
@@ -24,52 +27,6 @@ class EnergyAlarm extends Component {
         this.setState({ apiResponse: JSON.parse(res) });
       })
       .catch((err) => console.error("Fetch error: ", err));
-  }
-
-
-  updateStateChangeTimes(newApiResponse) {
-    const { stateChangeTimes, apiResponse, dangerHistory } = this.state;
-    const newStateChangeTimes = { ...stateChangeTimes };
-
-    const ranges = {
-      V12: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
-      V23: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
-      V31: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
-      TotEnergy: { normal: [0, 999], warning: [1000, 200], danger: [2001, Infinity] },
-      Current_1: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
-      Current_2: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
-      Current_3: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
-      Power: { normal: [0, 99], warning: [100, 200], danger: [201, Infinity] },
-    };
-
-    const getState = (key, value) => {
-      const range = ranges[key];
-      if (!range) return 'Normal';
-
-      if (value >= range.danger[0] && value <= range.danger[1]) {
-        return 'Danger';
-      } else if (value >= range.warning[0] && value <= range.warning[1]) {
-        return 'Warning';
-      } else {
-        return 'Normal';
-      }
-    };
-
-    Object.keys(newApiResponse).forEach((key) => {
-      const newState = getState(key, newApiResponse[key]);
-      const oldState = getState(key, apiResponse[key]);
-      if (newState !== oldState) {
-        newStateChangeTimes[key] = new Date().toLocaleString();
-        if (newState === 'Danger') {
-          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState });
-        }
-        // if (newState === 'Warning') {
-        //   dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState});
-        // }
-      }
-    });
-
-    this.setState({ stateChangeTimes: newStateChangeTimes, dangerHistory });
   }
 
   componentDidMount() {
@@ -96,11 +53,52 @@ class EnergyAlarm extends Component {
     this.socket.disconnect();
   }
 
+  //Logic for Alarm chart status, time change, and danger chart
+  updateStateChangeTimes(newApiResponse) {
+    const { stateChangeTimes, apiResponse, dangerHistory } = this.state;
+    const newStateChangeTimes = { ...stateChangeTimes };
+    const ranges = {
+      V12: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
+      V23: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
+      V31: { normal: [0, 360], warning: [361, 369], danger: [370, Infinity] },
+      TotEnergy: { normal: [0, 999], warning: [1000, 200], danger: [2001, Infinity] },
+      Current_1: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
+      Current_2: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
+      Current_3: { normal: [0, 39], warning: [40, 49], danger: [50, Infinity] },
+      Power: { normal: [0, 99], warning: [100, 200], danger: [201, Infinity] },
+    };
+
+    const getState = (key, value) => {
+      const range = ranges[key];
+      if (!range) return 'Normal';
+      if (value >= range.danger[0] && value <= range.danger[1]) {
+        return 'Danger';
+      } else if (value >= range.warning[0] && value <= range.warning[1]) {
+        return 'Warning';
+      } else {
+        return 'Normal';
+      }
+    };
+
+    Object.keys(newApiResponse).forEach((key) => {
+      const newState = getState(key, newApiResponse[key]);
+      const oldState = getState(key, apiResponse[key]);
+      if (newState !== oldState) {
+        newStateChangeTimes[key] = new Date().toLocaleString();
+        if (newState === 'Danger') {
+          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState });
+        }
+      }
+    });
+    this.setState({ stateChangeTimes: newStateChangeTimes, dangerHistory });
+  }
+
   clearTable() {
     this.setState({ dangerHistory: [] }); // Clear the dangerHistory
   }
 
   render() {
+     //Configuration for tables
     const { apiResponse, stateChangeTimes, dangerHistory } = this.state;
 
     const descriptions = {
@@ -128,7 +126,6 @@ class EnergyAlarm extends Component {
     const getState = (key, value) => {
       const range = ranges[key];
       if (!range) return 'Normal'; // Default state if no range is defined
-
       if (value >= range.danger[0] && value <= range.danger[1]) {
         return 'Danger';
       } else if (value >= range.warning[0] && value <= range.warning[1]) {
@@ -140,11 +137,8 @@ class EnergyAlarm extends Component {
 
     const keys = Object.keys(apiResponse).filter(key => descriptions[key]);
 
-
-
     return (
       <div className="EnergyAlarm">
-
         <div class="myStyle">
           <NavBar></NavBar>
           <header className="EnergyAlarm-header">
@@ -193,15 +187,12 @@ class EnergyAlarm extends Component {
                       </button>
                     </th>
                   </tr>
-
                 </thead>
                 <tbody>
                   {dangerHistory.map((entry, index) => {
-
                     const rowClass = entry.state === "Danger" ? "danger-row" : entry.state === "Warning" ? "warning-row" : "normal-row";
                     const stateImg = entry.state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }} /> : entry.state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }}
                     /> : "";
-
                     return (
                       <tr key={index}>
                         <th scope="row" style={{ color: "#ffffff" }}>{index + 1}</th>
@@ -210,7 +201,6 @@ class EnergyAlarm extends Component {
                         <td className={rowClass}>{descriptions[entry.key]}</td>
                         <td className={rowClass}>{entry.value}</td>
                         <td className={rowClass}>{stateImg} {entry.state}</td>
-
                       </tr>
                     )
                   })}
@@ -219,7 +209,6 @@ class EnergyAlarm extends Component {
             </div>
             <br></br>
             <h2 className="table-title">Energy Status</h2>
-
             <div className="table-container">
               <table className="table table-hover bordered-table blurred-table">
                 <thead>
@@ -238,7 +227,6 @@ class EnergyAlarm extends Component {
                     const rowClass = state === "Danger" ? "danger-row" : state === "Warning" ? "warning-row" : "normal-row";
                     const stateImg = state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }} /> : state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }}
                     /> : "";
-
                     return (
                       <tr key={index}>
                         <th scope="row" style={{ color: "#ffffff" }}>{index + 1}</th>

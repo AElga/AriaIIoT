@@ -1,9 +1,4 @@
-//AK 
-// my name is mariam
-// frontend now
-//Ali Elgazzar comme
-//import React, { useState, useEffect } from 'react';
-//import io from 'socket.io-client';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import VibPage from './Pages/VibPage';
 import Home from './Pages/Home';
 import Login from './Login/Login'
@@ -12,15 +7,18 @@ import MPMonitoring from './Pages/MPMonitoring';
 import EnergyAlarm from './Pages/EnergyAlarm'
 import SignUp from './Login/SignUp';
 import Verify from './Login/Verify'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PredictiveAlarm from './Pages/PredictiveAlarm';
 import Performance from './Pages/Performance';
 
+// App.js executes the program and defines the route for each page. In addition,
+// App.js holds the methods for platform wide functions, like preventing users from
+// accessing the inspect element
 
 document.addEventListener("contextmenu", function (event) {
   alert("Inspect Elements Not Allowed");
   event.preventDefault();
 })
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "F12" ||
     (event.ctrlKey && event.shiftKey && event.key === "I") ||
@@ -45,16 +43,11 @@ setInterval(function () {
   }
 }, 1000)
 
-
-
-
 const App = () => {
-
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Start/>} exact /> */}
           <Route path="/" element={<Login />} exact />
           <Route path="/SignUp" element={<SignUp />} exact />
           <Route path="/Home" element={<Home />} exact />
@@ -64,9 +57,7 @@ const App = () => {
           <Route path="/EnergyAlarm" element={<EnergyAlarm />} exact />
           <Route path="/PredictiveAlarm" element={<PredictiveAlarm />} exact />
           <Route path="/Performance" element={<Performance />} exact />
-
           <Route path="/Verify" element={<Verify/>} exact/>
-
         </Routes>
       </BrowserRouter>
     </div>

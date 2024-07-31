@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import NavBar from '../NavBar';
 
+//Predictive Alarm Description
+
 class PredictiveAlarm extends Component {
+  //Backend to Frontend logic
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +18,6 @@ class PredictiveAlarm extends Component {
     this.clearTable = this.clearTable.bind(this);
   }
 
-
   callAPI() {
     fetch("http://localhost:5000/test1")
       .then((res) => res.text())
@@ -26,55 +28,11 @@ class PredictiveAlarm extends Component {
       .catch((err) => console.error("Fetch error: ", err));
   }
 
-  updateStateChangeTimes(newApiResponse) {
-    const { stateChangeTimes, apiResponse, dangerHistory } = this.state;
-    const newStateChangeTimes = { ...stateChangeTimes };
-
-    const ranges = {
-      X_axis_RMS_Velocity_mmPerSec_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-      Z_axis_RMS_Velocity_mmPerSec_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-      Temperature_C_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-      X_axis_RMS_Velocity_mmPerSec_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-      Z_axis_RMS_Velocity_mmPerSec_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-      Temperature_C_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
-    };
-
-    const getState = (key, value) => {
-      const range = ranges[key];
-      if (!range) return 'Normal';
-
-      if (value >= range.danger[0] && value <= range.danger[1]) {
-        return 'Danger';
-      } else if (value >= range.warning[0] && value <= range.warning[1]) {
-        return 'Warning';
-      } else {
-        return 'Normal';
-      }
-    };
-
-    Object.keys(newApiResponse).forEach((key) => {
-      const newState = getState(key, newApiResponse[key]);
-      const oldState = getState(key, apiResponse[key]);
-      if (newState !== oldState) {
-        newStateChangeTimes[key] = new Date().toLocaleString();
-        if (newState === 'Danger') {
-          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState });
-        }
-        // if (newState === 'Warning') {
-        //   dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState});
-        // }
-      }
-    });
-
-    this.setState({ stateChangeTimes: newStateChangeTimes, dangerHistory });
-  }
-
-
   componentDidMount() {
     this.callAPI();
     this.interval = setInterval(() => {
-      this.callAPI(); // Fetch data at regular intervals
-    }, 1000); // Adjust the interval as needed
+      this.callAPI(); 
+    }, 1000); 
 
     // Set up WebSocket connection
     this.socket = io('http://localhost:5000');
@@ -93,12 +51,52 @@ class PredictiveAlarm extends Component {
     this.socket.off('update');
     this.socket.disconnect();
   }
+  //Logic for Alarm chart status, time change, and danger chart
+  updateStateChangeTimes(newApiResponse) {
+    const { stateChangeTimes, apiResponse, dangerHistory } = this.state;
+    const newStateChangeTimes = { ...stateChangeTimes };
 
+    const ranges = {
+      X_axis_RMS_Velocity_mmPerSec_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+      Z_axis_RMS_Velocity_mmPerSec_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+      Temperature_C_1: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+      X_axis_RMS_Velocity_mmPerSec_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+      Z_axis_RMS_Velocity_mmPerSec_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+      Temperature_C_2: { normal: [0, 10], warning: [11, 40], danger: [41, Infinity] },
+    };
+
+    const getState = (key, value) => {
+      const range = ranges[key];
+      if (!range) return 'Normal';
+      if (value >= range.danger[0] && value <= range.danger[1]) {
+        return 'Danger';
+      } else if (value >= range.warning[0] && value <= range.warning[1]) {
+        return 'Warning';
+      } else {
+        return 'Normal';
+      }
+    };
+
+    Object.keys(newApiResponse).forEach((key) => {
+      const newState = getState(key, newApiResponse[key]);
+      const oldState = getState(key, apiResponse[key]);
+      if (newState !== oldState) {
+        newStateChangeTimes[key] = new Date().toLocaleString();
+        if (newState === 'Danger') {
+          dangerHistory.push({ time: newStateChangeTimes[key], key, value: newApiResponse[key], state: newState });
+        }
+      }
+    });
+    this.setState({ stateChangeTimes: newStateChangeTimes, dangerHistory });
+  }
+
+   // Clear the dangerHistory
   clearTable() {
-    this.setState({ dangerHistory: [] }); // Clear the dangerHistory
+    this.setState({ dangerHistory: [] });
   }
 
   render() {
+    //Configuration for tables
     const { apiResponse, stateChangeTimes, dangerHistory } = this.state;
 
     const descriptions = {
@@ -122,7 +120,6 @@ class PredictiveAlarm extends Component {
     const getState = (key, value) => {
       const range = ranges[key];
       if (!range) return 'Normal'; // Default state if no range is defined
-
       if (value >= range.danger[0] && value <= range.danger[1]) {
         return 'Danger';
       } else if (value >= range.warning[0] && value <= range.warning[1]) {
@@ -134,17 +131,13 @@ class PredictiveAlarm extends Component {
 
     const keys = Object.keys(apiResponse).filter(key => descriptions[key]);
 
-
-
     return (
       <div className="PredictiveAlarm">
-
         <div class="myStyle">
           <NavBar></NavBar>
           <header className="PredictiveAlarm-header">
             <br></br>
             <h2 className="table-title">Maintenance Alarms</h2>
-
             <div className="table-height">
               <table className="table table-hover bordered-table blurred-table">
                 <thead>
@@ -180,15 +173,12 @@ class PredictiveAlarm extends Component {
                       </button>
                     </th>
                   </tr>
-
                 </thead>
                 <tbody>
                   {dangerHistory.map((entry, index) => {
-
                     const rowClass = entry.state === "Danger" ? "danger-row" : entry.state === "Warning" ? "warning-row" : "normal-row";
                     const stateImg = entry.state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }} /> : entry.state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }}
                     /> : "";
-
                     return (
                       <tr key={index}>
                         <th scope="row" style={{ color: "#ffffff" }}>{index + 1}</th>
@@ -197,7 +187,6 @@ class PredictiveAlarm extends Component {
                         <td className={rowClass}>{descriptions[entry.key]}</td>
                         <td className={rowClass}>{entry.value}</td>
                         <td className={rowClass}>{stateImg} {entry.state}</td>
-
                       </tr>
                     )
                   })}
@@ -206,7 +195,6 @@ class PredictiveAlarm extends Component {
             </div>
             <br></br>
             <h2 className="table-title">Maintenance Status</h2>
-
             <div className="table-container">
               <table className="table table-hover bordered-table blurred-table">
                 <thead>
@@ -225,7 +213,6 @@ class PredictiveAlarm extends Component {
                     const rowClass1 = state === "Danger" ? "danger-row" : state === "Warning" ? "warning-row" : "normal-row";
                     const stateImg = state === "Danger" ? <img src={"https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }} /> : state === "Warning" ? <img src={"https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/warning_alert_attention_search-512.png"} alt={state} style={{ width: '20px', height: '20px', marginRight: '2px', paddingBottom: '3px' }}
                     /> : "";
-
                     return (
                       <tr key={index}>
                         <th className={rowClass1} scope="row">{index + 1}</th>

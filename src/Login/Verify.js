@@ -4,7 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './style.css';
 
+//Once a user has their credentials accepted, an email is sent to their username email with a verification code.
+//This page acts as two factor authentication through asking the user for that verification code. Once the entered
+//code matches the generated backend code, the user is allowed to access the platform
+
 const Verify = () => {
+    //set the useState
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [verificationCode, setVerificationCode] = useState("");
@@ -25,7 +30,9 @@ const Verify = () => {
         })
             .then(res => res.json())
             .then(data => {
+                //check to see if entered code is accepted by the backend
                 if (data.success) {
+                    //go to the home page
                     navigate("/Home");
                 } else {
                     setVerificationError(data.message || "Verification failed");

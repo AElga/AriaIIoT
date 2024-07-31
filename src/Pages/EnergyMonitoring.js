@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Box, Typography, } from "@mui/material";
 import io from 'socket.io-client';
 import NavBar from '../NavBar';
-// import Chart from 'chart.js';
-import GaugeComponent from 'react-gauge-component'
+//import GaugeComponent from 'react-gauge-component'
 import CustomAnalogGauge from '../Components/CustomGauge2';
 import CanvasJSReact from '@canvasjs/react-charts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//This page takes MQTT information regarding the 'Energy_Monitoring' Topic
+//and displays it in a user friendly fashion, in addition to 
+//allowing for users to edit the ranges of gauges 
 
+//Data sets for charts
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var dps = [];
 var dps2 = [];
@@ -29,8 +32,8 @@ var yval2 = 0;
 var yval3 = 0;
 var updateInterval = 1000;
 
-
 class EnergyMonitoring extends Component {
+  //Backend to Frontend logic
   constructor(props) {
     super(props);
     this.state = {
@@ -52,7 +55,7 @@ class EnergyMonitoring extends Component {
     this.callAPI();
     this.interval = setInterval(() => {
       this.callAPI(); // Fetch data at regular intervals
-    }, 1000); // Adjust the interval as needed
+    }, 1000); 
     this.interval2 = setInterval(this.updateChart, updateInterval);
 
     // Set up WebSocket connection
@@ -74,18 +77,16 @@ class EnergyMonitoring extends Component {
     this.socket.disconnect();
   }
 
+  //Ensuring that the charts update with the MQTT data
   updateChart() {  // Access apiResponse from state
-
     yVal = parseFloat(this.state.apiResponse.Current_3);
     yVal2 = parseFloat(this.state.apiResponse.Current_2);
     yVal3 = parseFloat(this.state.apiResponse.Current_4);
     xVal = new Date(); // Get the current time
 
-
     dps.push({ x: xVal, y: yVal });
     dps2.push({ x: xVal, y: yVal2 });
     dps3.push({ x: xVal, y: yVal3 });
-    // xVal++;
 
     if (dps.length > 20) {
       dps.shift();
@@ -106,7 +107,6 @@ class EnergyMonitoring extends Component {
     dvs.push({ x: xval, y: yval });
     dvs2.push({ x: xval, y: yval2 });
     dvs3.push({ x: xval, y: yval3 });
-    // xval++;
 
     if (dvs.length > 20) {
       dvs.shift();
@@ -118,33 +118,38 @@ class EnergyMonitoring extends Component {
       dvs3.shift();
     }
     this.chart.render();
-
   }
 
   render() {
-
+    //configurations for gauges and charts
     const { apiResponse, messages } = this.state;
-    const dta = {value: parseFloat(apiResponse.Current_3), minv: '0', maxv: '360', arcs: [
-      { limit: 200, color: '#5BE12C', showTick: true },
-      { limit: 260, color: '#F5CD19', showTick: true },
-      { limit: 360, color: '#EA4228', showTick: true },
-    ]}
-    const dta1 = {value: parseFloat(apiResponse.Current_2), minv: '0', maxv: '360', arcs: [
-      { limit: 200, color: '#5BE12C', showTick: true },
-      { limit: 260, color: '#F5CD19', showTick: true },
-      { limit: 360, color: '#EA4228', showTick: true },
-    ]}
-    const dta2 = {value: parseFloat(apiResponse.Current_4), minv: '0', maxv: '360', arcs: [
-      { limit: 200, color: '#5BE12C', showTick: true },
-      { limit: 260, color: '#F5CD19', showTick: true },
-      { limit: 360, color: '#EA4228', showTick: true },
-    ]}
+    const dta = {
+      value: parseFloat(apiResponse.Current_3), minv: '0', maxv: '360', arcs: [
+        { limit: 200, color: '#5BE12C', showTick: true },
+        { limit: 260, color: '#F5CD19', showTick: true },
+        { limit: 360, color: '#EA4228', showTick: true },
+      ]
+    }
+    const dta1 = {
+      value: parseFloat(apiResponse.Current_2), minv: '0', maxv: '360', arcs: [
+        { limit: 200, color: '#5BE12C', showTick: true },
+        { limit: 260, color: '#F5CD19', showTick: true },
+        { limit: 360, color: '#EA4228', showTick: true },
+      ]
+    }
+    const dta2 = {
+      value: parseFloat(apiResponse.Current_4), minv: '0', maxv: '360', arcs: [
+        { limit: 200, color: '#5BE12C', showTick: true },
+        { limit: 260, color: '#F5CD19', showTick: true },
+        { limit: 360, color: '#EA4228', showTick: true },
+      ]
+    }
     const options = {
       title: {
         text: "Current Measurement",
         fontColor: "#FFFFFF",
-        fontFamily: "Arial", // Change this to the font you want
-        fontSize: 24, // Optional: Set the font size
+        fontFamily: "Arial", 
+        fontSize: 24, 
         fontWeight: "bold"
       },
       backgroundColor: "#156b9F6A",
@@ -162,14 +167,12 @@ class EnergyMonitoring extends Component {
         lineColor: "#BBBBBB", // Color of y-axis line
         tickColor: "#FFFFFF", // Color of y-axis ticks
         titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
-        // gridColor: "#CCCCCC" // Color of y-axis grid lines
       },
       legend: {
         fontColor: "#FFFFFF",
         verticalAlign: "top", // Move legend to the top
         horizontalAlign: "center"
       },
-
       data: [
         {
           type: "line",
@@ -193,14 +196,13 @@ class EnergyMonitoring extends Component {
           color: "#00ff00"
         }
       ]
-
     }
     const optionsvolt = {
       title: {
         text: "Voltage Measurement",
         fontColor: "#FFFFFF",
-        fontFamily: "Arial", // Change this to the font you want
-        fontSize: 24, // Optional: Set the font size
+        fontFamily: "Arial",
+        fontSize: 24, 
         fontWeight: "bold"
       },
       backgroundColor: "#156b9F6A",
@@ -219,7 +221,6 @@ class EnergyMonitoring extends Component {
         lineColor: "#BBBBBB", // Color of y-axis line
         tickColor: "#FFFFFF", // Color of y-axis ticks
         titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
-        // gridColor: "#CCCCCC" // Color of y-axis grid lines
       },
       legend: {
         fontColor: "#FFFFFF",
@@ -249,14 +250,13 @@ class EnergyMonitoring extends Component {
           color: "#00ff00"
         }
       ]
-
     }
-    const energyJoules = apiResponse.TotEnergy;
-
     // Convert to megajoules (MJ) and round to one decimal place
+    const energyJoules = apiResponse.TotEnergy;
     const energyMJ = energyJoules / 1e6;
     const roundedEnergyMJ = Math.round(energyMJ * 100) / 100;
 
+    //Logic for voltage color change based on status
     const getColorForVoltage = (value) => {
       if (value < 365) {
         return '#FFFFFF'; // White
@@ -276,11 +276,8 @@ class EnergyMonitoring extends Component {
     const voltageColor2 = getColorForVoltage(voltageValue2);
     const voltageColor3 = getColorForVoltage(voltageValue3);
 
-
     return (
-
       <div className="Energy">
-
         <div class="myStyle"><NavBar></NavBar>
           <header className="Energy-header" >
             <br></br><br></br>
@@ -293,8 +290,8 @@ class EnergyMonitoring extends Component {
                   alignItems="center"
                   justifyContent="center"
                   flexDirection="column"
-                  borderRadius="8px" // Adjust the radius as needed
-                  padding="16px" // Optional: Add padding to provide spacing inside the box
+                  borderRadius="8px" 
+                  padding="16px" 
                   border="2px solid #333333" // White borders
                   boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                   marginLeft={{ xs: "0px", sm: "74px" }}
@@ -313,7 +310,6 @@ class EnergyMonitoring extends Component {
                   <Typography class='value1' fontWeight="600" color={"#FFFFFF"}>
                     {roundedEnergyMJ} MJ
                   </Typography>
-
                 </Box>
               </div>
               <div class="col">
@@ -324,8 +320,8 @@ class EnergyMonitoring extends Component {
                   alignItems="center"
                   justifyContent="center"
                   flexDirection="column"
-                  borderRadius="8px" // Adjust the radius as needed
-                  padding="16px" // Optional: Add padding to provide spacing inside the box
+                  borderRadius="8px" 
+                  padding="16px" 
                   border="2px solid #333333" // White borders
                   boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                   marginLeft={{ xs: "0px", sm: "84px" }}
@@ -344,16 +340,13 @@ class EnergyMonitoring extends Component {
                   <Typography class='value1' fontWeight="600" color={"#FFFFFF"}>
                     {apiResponse.Power} kW
                   </Typography>
-
                 </Box>
               </div>
             </div>
             <p></p>
             <div class="row">
-
               <div class="col-4 p-3 mb-2">
                 <Box
-                  // backgroundColor={"#6390b08C"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -361,16 +354,8 @@ class EnergyMonitoring extends Component {
                   flexDirection="column"
                   width={{ xs: "100%", sm: "400px" }}
                   marginLeft={{ xs: "0px", sm: "50px" }}
-
                   mb={2}
-                // Adjust the width as needed
-                //  borderRadius="8px" // Adjust the radius as needed
-                //  padding="16px" // Optional: Add padding to provide spacing inside the box
-                // border="2px solid #333333" // White borders
-                //     boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                //     marginLeft={"70px"}
                 >
-
                   <Typography variant="h5" fontWeight="600" color={"#FFFFFF"} >
                     Current 1
                     <img
@@ -379,33 +364,15 @@ class EnergyMonitoring extends Component {
                       style={{ width: '40px', height: '40px', marginRight: '8px' }}
                     />
                   </Typography>
-
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 200, color: '#5BE12C', showTick: true },
-                          { limit: 260, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.Current_3)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta} />
                   </div>
                   <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>
-
               <div class="col-4 p-3 mb-2">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -424,32 +391,15 @@ class EnergyMonitoring extends Component {
                     />
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 200, color: '#5BE12C', showTick: true },
-                          { limit: 260, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.Current_2)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta1} />
                   </div>
                   <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>
-
               <div class="col-4 p-3 mb-2"  >
                 <Box
                   border={"medium"}
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -466,36 +416,16 @@ class EnergyMonitoring extends Component {
                       alt="Current Icon"
                       style={{ width: '40px', height: '40px', marginRight: '8px' }}
                     />
-
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 200, color: '#5BE12C', showTick: true },
-                          { limit: 260, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.Current_4)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta2} />
                   </div>
                   <br /><br />
                   <p class="font">Amp</p>
                 </Box>
               </div>
-
-
             </div>
-
             <div class="row">
-
               <div class="col m-4">
                 <Box
                   backgroundColor={"#156B998C"}
@@ -507,11 +437,10 @@ class EnergyMonitoring extends Component {
                   mb={2}
                   justifyContent="center"
                   flexDirection={'column'}
-                  borderRadius="8px" // Adjust the radius as needed
+                  borderRadius="8px"
                   padding="16px"
                   border="2px solid #333333" // White borders
                   boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
-
                 >
                   <Box
                     width="100%" // Make the inner Box take the full width
@@ -523,7 +452,6 @@ class EnergyMonitoring extends Component {
                     </Typography>
                   </Box>
                   <Typography fontSize={"35px"} color={voltageColor1}>{apiResponse.V12} V
-
                   </Typography>
                 </Box>
               </div>
@@ -535,7 +463,7 @@ class EnergyMonitoring extends Component {
                   alignItems="center"
                   justifyContent="center"
                   flexDirection="column"
-                  borderRadius="8px" // Adjust the radius as needed
+                  borderRadius="8px"
                   padding="16px"
                   border="2px solid #333333" // White borders
                   boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
@@ -543,7 +471,6 @@ class EnergyMonitoring extends Component {
                   marginLeft={{ xs: "0px", sm: "20px" }}
                   mb={2}
                 >
-
                   <Box
                     width="100%" // Make the inner Box take the full width
                     display="flex"
@@ -554,7 +481,6 @@ class EnergyMonitoring extends Component {
                     </Typography>
                   </Box>
                   <Typography fontSize={"35px"} color={voltageColor2}>{apiResponse.V23} V
-
                   </Typography>
                 </Box>
               </div>
@@ -564,11 +490,10 @@ class EnergyMonitoring extends Component {
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
-                  // marginLeft={"50px"}
                   justifyContent="center"
                   flexDirection="column"
                   width={{ xs: "100%", sm: "400px" }}
-                  borderRadius="8px" // Adjust the radius as needed
+                  borderRadius="8px"
                   padding="16px"
                   border="2px solid #333333" // White borders
                   boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)" // Ambient light shadow
@@ -580,49 +505,34 @@ class EnergyMonitoring extends Component {
                   >
                     <Typography className='font' fontWeight="400" color={"#adadac"} fontSize={"30px"}>
                       Voltage 3
-
                     </Typography>
                   </Box>
                   <Typography fontSize={"35px"} color={voltageColor3}>{apiResponse.V31} V
-
                   </Typography>
                 </Box>
               </div>
-              {/* <div class="col">
-          {Object.keys(apiResponse).map((key) => (
-              <p key={key}>{key}: {apiResponse[key]}</p>
-            ))} 
-             </div> */}
-
             </div>
-
             <br></br><br></br>
-
             <div className='container'>
               <div class="row">
-
                 <div class="col">
                   <Box
-                    // border={"medium"}
                     backgroundColor={"#156B998C"}
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
                     flexDirection="column"
-                    borderRadius="8px" // Adjust the radius as needed
+                    borderRadius="8px"
                     padding="3px"
                     border="2px solid #333333" // White borders
                     boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
                     width={{ xs: "100%", sm: "600px" }}
                     marginLeft={{ xs: "0px", sm: "20px" }}
-                  //mb={2}              
                   >
                     <CanvasJSChart options={options}
                       onRef={ref => this.chart = ref} />
                   </Box>
                 </div>
-
-
                 <div class="col">
                   <Box
                     backgroundColor={"#156B998C"}
@@ -630,30 +540,24 @@ class EnergyMonitoring extends Component {
                     alignItems="center"
                     justifyContent="center"
                     flexDirection="column"
-                    borderRadius="8px" // Adjust the radius as needed
+                    borderRadius="8px"
                     padding="3px"
                     border="2px solid #333333" // White borders
                     boxShadow="4px 7px 15px rgba(0, 0, 0, 0.5)"
-                    // marginRight={"60px"}
                     width={{ xs: "100%", sm: "600px" }}
-                  // marginRight={{ xs: "0px", sm: "20px auto" }}
-                  // mb={2}
                   >
                     <CanvasJSChartvolt options={optionsvolt}
                       onRef={ref => this.chart = ref} />
                   </Box>
-
                 </div>
               </div>
               <br></br><br></br>
             </div>
           </header>
         </div>
-
       </div>
     );
   }
 }
-
 
 export default EnergyMonitoring;

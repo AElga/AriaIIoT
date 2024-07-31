@@ -5,6 +5,12 @@ import NavBar from '../NavBar';
 import CanvasJSReact from '@canvasjs/react-charts';
 import CustomTempGauge from '../Components/CustomGauge';
 import CustomAnalogGauge from '../Components/CustomGauge2';
+
+//This page takes MQTT information regarding the 'Vib_Temp_Measurments' Topic
+//and displays it in a user friendly fashion, in addition to 
+//allowing for users to edit the ranges of gauges 
+
+//Data sets for charts
 var CanvasJSChartM = CanvasJSReact.CanvasJSChart;
 var dms = [];
 var dms2 = [];
@@ -29,9 +35,8 @@ var Yval = 0;
 var Yval2 = 0;
 var updateInterval = 3000;
 
-
-
 class VibPage extends Component {
+  //Backend to Frontend logic
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +46,6 @@ class VibPage extends Component {
     this.callAPI = this.callAPI.bind(this);
     this.updateChart = this.updateChart.bind(this);
   }
-
 
   callAPI() {
     fetch("http://localhost:5000/test1")
@@ -54,7 +58,7 @@ class VibPage extends Component {
     this.callAPI();
     this.interval = setInterval(() => {
       this.callAPI(); // Fetch data at regular intervals
-    }, 1000); // Adjust the interval as needed
+    }, 1000); 
     this.interval2 = setInterval(this.updateChart, updateInterval);
 
     // Set up WebSocket connection
@@ -76,16 +80,14 @@ class VibPage extends Component {
     this.socket.disconnect();
   }
 
+  //Ensuring that the charts update with the MQTT data
   updateChart() {  // Access apiResponse from state
-
     yVal = parseFloat(this.state.apiResponse.X_axis_RMS_Velocity_mmPerSec_1);
     yVal2 = parseFloat(this.state.apiResponse.Z_axis_RMS_Velocity_mmPerSec_1);
     xVal = new Date(); // Get the current time
 
-
     dms.push({ x: xVal, y: yVal });
     dms2.push({ x: xVal, y: yVal2 });
-    // xVal++;
 
     if (dms.length > 20) {
       dms.shift();
@@ -101,7 +103,6 @@ class VibPage extends Component {
 
     dps.push({ x: xval, y: yval });
     dps2.push({ x: xval, y: yval2 });
-    // xval++;
 
     if (dps.length > 20) {
       dps.shift();
@@ -117,7 +118,6 @@ class VibPage extends Component {
 
     dts.push({ x: Xval, y: Yval });
     dts2.push({ x: Xval, y: Yval2 });
-    // xval++;
 
     if (dts.length > 20) {
       dts.shift();
@@ -126,10 +126,10 @@ class VibPage extends Component {
       dts2.shift();
     }
     this.chart.render();
-
   }
 
   render() {
+    //configurations for gauges and charts
     const { apiResponse, messages } = this.state;
     const dta1 = {
       value: parseFloat(apiResponse.Temperature_C_1), minv: '0', maxv: '360', arcs: [
@@ -176,8 +176,8 @@ class VibPage extends Component {
       title: {
         text: "Motor 1",
         fontColor: "#FFFFFF",
-        fontFamily: "Arial", // Change this to the font you want
-        fontSize: 24, // Optional: Set the font size
+        fontFamily: "Arial",
+        fontSize: 24,
         fontWeight: "bold"
       },
       backgroundColor: "#156b9F6A",
@@ -195,14 +195,12 @@ class VibPage extends Component {
         lineColor: "#BBBBBB", // Color of y-axis line
         tickColor: "#FFFFFF", // Color of y-axis ticks
         titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
-        // gridColor: "#CCCCCC" // Color of y-axis grid lines
       },
       legend: {
         fontColor: "#FFFFFF",
         verticalAlign: "top", // Move legend to the top
         horizontalAlign: "center"
       },
-
       data: [
         {
           type: "line",
@@ -219,14 +217,13 @@ class VibPage extends Component {
           color: "#ff0000"
         }
       ]
-
     }
     const optionsP = {
       title: {
         text: "Pump 1",
         fontColor: "#FFFFFF",
-        fontFamily: "Arial", // Change this to the font you want
-        fontSize: 24, // Optional: Set the font size
+        fontFamily: "Arial", 
+        fontSize: 24, 
         fontWeight: "bold"
       },
       backgroundColor: "#156b9F6A",
@@ -245,7 +242,6 @@ class VibPage extends Component {
         lineColor: "#BBBBBB", // Color of y-axis line
         tickColor: "#FFFFFF", // Color of y-axis ticks
         titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
-        // gridColor: "#CCCCCC" // Color of y-axis grid lines
       },
       legend: {
         fontColor: "#FFFFFF",
@@ -268,14 +264,13 @@ class VibPage extends Component {
           color: "#ff0000"
         }
       ]
-
     }
     const optionstemp = {
       title: {
         text: "Motor & Pump Temperatures",
         fontColor: "#FFFFFF",
-        fontFamily: "Arial", // Change this to the font you want
-        fontSize: 24, // Optional: Set the font size
+        fontFamily: "Arial", 
+        fontSize: 24, 
         fontWeight: "bold"
       },
       backgroundColor: "#156b9F6A",
@@ -294,7 +289,6 @@ class VibPage extends Component {
         lineColor: "#BBBBBB", // Color of y-axis line
         tickColor: "#FFFFFF", // Color of y-axis ticks
         titleFontColor: "#FFFFFF", // Color of y-axis title (if any)
-        // gridColor: "#CCCCCC" // Color of y-axis grid lines
       },
       legend: {
         fontColor: "#FFFFFF",
@@ -317,22 +311,19 @@ class VibPage extends Component {
           color: "#ff0000"
         }
       ]
-
     }
 
     return (
       <div className="VIB">
-
-        <div class="myStyle"> <NavBar></NavBar>
+        <div class="myStyle"> 
+          <NavBar></NavBar>
           <header className="VIB-header">
             <br></br>
             <div class="row">
               <div class="col">
-
               </div>
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -343,81 +334,12 @@ class VibPage extends Component {
                     Motor Temperature
                   </Typography>
                   <div className="guage">
-                    {/* <GaugeComponent
-                      type="semicircle"
-                      arc={{
-                        width: 0.2,
-                        padding: 0.005,
-                        cornerRadius: 1,
-                        gradient: true,
-                        subArcs: [
-                          {
-                            limit: 0,
-                            color: '#5BE12C',
-                            showTick: true,
-                            tooltip: {
-                              text: 'Too low temperature!'
-                            }
-                          },
-                          {
-                            limit: 125,
-                            color: '#F5CD19',
-                            showTick: true,
-                            tooltip: {
-                              text: 'Low temperature!'
-                            }
-                          },
-                          {
-                            limit: 253,
-                            color: '#F5CD19',
-                            showTick: true,
-                            tooltip: {
-                              text: 'OK temperature!'
-                            }
-                          },
-                          {
-                            limit: 325, color: '#EA4228', showTick: true,
-                            tooltip: {
-                              text: 'High temperature!'
-                            }
-                          },
-                          {
-                            color: '#EA4228',
-                            tooltip: {
-                              text: 'Too high temperature!'
-                            }
-                          }
-                        ]
-                      }}
-                      pointer={{
-                        color: '#888888',
-                        width: 15,
-                        type: 'arrow', // Adjust the base width of the pointer
-
-                        // elastic: true,
-                      }}
-                      labels={{
-                        valueLabel: { formatTextValue: value => value + 'ºC' },
-                        tickLabels: {
-                          type: 'outer',
-                          valueConfig: { formatTextValue: value => value + 'ºC', fontSize: 10 },
-                          ticks: [
-                          ],
-                        }
-                      }}
-                      value={apiResponse.Temperature_C_1}
-                      minValue={0}
-                      maxValue={360}
-
-                    /> */}
-                    <CustomTempGauge dta={dta1} ></CustomTempGauge>
-
+                    <CustomTempGauge dta={dta1} />
                   </div>
                 </Box>
               </div>
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -428,86 +350,17 @@ class VibPage extends Component {
                     Pump Temperature (C)
                   </Typography>
                   <div className="guage">
-                    {/* <GaugeComponent
-                      type="semicircle"
-                      arc={{
-                        width: 0.2,
-                        padding: 0.005,
-                        cornerRadius: 1,
-                        gradient: true,
-                        subArcs: [
-                          {
-                            limit: 0,
-                            color: '#5BE12C',
-                            showTick: true,
-                            tooltip: {
-                              text: 'Too low temperature!'
-                            },
-                          },
-                          {
-                            limit: 120,
-                            color: '#F5CD19',
-                            showTick: true,
-                            tooltip: {
-                              text: 'Low temperature!'
-                            }
-                          },
-                          {
-                            limit: 240,
-                            color: '#F5CD19',
-                            showTick: true,
-                            tooltip: {
-                              text: 'OK temperature!'
-                            }
-                          },
-                          {
-                            limit: 300, color: '#EA4228', showTick: true,
-                            tooltip: {
-                              text: 'High temperature!'
-                            }
-                          },
-                          {
-                            color: '#EA4228',
-                            tooltip: {
-                              text: 'Too high temperature!'
-                            }
-                          }
-                        ]
-                      }}
-                      pointer={{
-                        color: '#888888',
-                        width: 15,
-                        // elastic: true,
-                        type: 'arrow',
-                      }}
-                      labels={{
-                        valueLabel: { formatTextValue: value => value + 'ºC' },
-                        tickLabels: {
-                          type: 'outer',
-                          valueConfig: { formatTextValue: value => value + 'ºC', fontSize: 10 },
-                          ticks: [
-                          ],
-                        }
-                      }}
-                      value={apiResponse.Temperature_C_2}
-                      minValue={0}
-                      maxValue={360}
-
-                    /> */}
-                    <CustomTempGauge dta={dta2} ></CustomTempGauge>
-
+                    <CustomTempGauge dta={dta2} />
                   </div>
                 </Box>
               </div>
               <div class="col">
-
               </div>
             </div>
             <br></br><br></br><br></br><br></br><br></br>
             <div class="row">
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -518,21 +371,6 @@ class VibPage extends Component {
                     Motor X-Axis Velocity
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 101, color: '#5BE12C', showTick: true },
-                          { limit: 256, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.X_axis_RMS_Velocity_mmPerSec_1)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta3} />
                   </div>
                   <br /><br />
@@ -541,7 +379,6 @@ class VibPage extends Component {
               </div>
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -552,21 +389,6 @@ class VibPage extends Component {
                     Motor Z-Axis Velocity
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 101, color: '#5BE12C', showTick: true },
-                          { limit: 256, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.Z_axis_RMS_Velocity_mmPerSec_1)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta4} />
                   </div>
                   <br /><br />
@@ -575,7 +397,6 @@ class VibPage extends Component {
               </div>
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -586,21 +407,6 @@ class VibPage extends Component {
                     Pump X-Axis Velocity
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 101, color: '#5BE12C', showTick: true },
-                          { limit: 256, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.X_axis_RMS_Velocity_mmPerSec_2)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta5} />
                   </div>
                   <br /><br />
@@ -609,7 +415,6 @@ class VibPage extends Component {
               </div>
               <div class="col">
                 <Box
-                  //backgroundColor={"#7f93a1AA"}
                   gridColumn="span 4"
                   display="flex"
                   alignItems="center"
@@ -620,21 +425,6 @@ class VibPage extends Component {
                     Pump Z-Axis Velocity
                   </Typography>
                   <div className="guage">
-
-                    {/* <GaugeComponent
-                      arc={{
-                        subArcs: [
-                          { limit: 0, color: '#', showTick: true },
-                          { limit: 101, color: '#5BE12C', showTick: true },
-                          { limit: 256, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-                        ],
-                      }}
-                      value={parseFloat(apiResponse.Z_axis_RMS_Velocity_mmPerSec_2)}
-                      maxValue={360}
-                      minValue={0}
-
-                    /> */}
                     <CustomAnalogGauge dta={dta6} />
                   </div>
                   <br /><br />
@@ -643,15 +433,6 @@ class VibPage extends Component {
               </div>
             </div>
             <br></br><br></br><br></br>
-            {/* {Object.keys(apiResponse).map((key) => (
-              <p key={key}>{key}: {apiResponse[key]}</p>
-            ))} */}
-            {/* <p>Motor Temperature: {apiResponse.Temperature_C_1} C</p>
-          <p>Pump Temperature: {apiResponse.Temperature_C_2} C</p>
-          <p>Motor RMS Velocity On X-axis: {apiResponse.X_axis_RMS_Velocity_mmPerSec_1} mm/sec</p>
-          <p>Pump RMS Velocity On X-axis: {apiResponse.X_axis_RMS_Velocity_mmPerSec_2} mm/sec</p>
-          <p>Motor RMS Velocity On Z-axis: {apiResponse.Z_axis_RMS_Velocity_mmPerSec_1} mm/sec</p>
-          <p>Pump RMS Velocity On Z-axis: {apiResponse.Z_axis_RMS_Velocity_mmPerSec_2} mm/sec</p> */}
             <div class="row">
               <div class="col-6">
                 <Box
@@ -667,12 +448,8 @@ class VibPage extends Component {
                 >
                   <CanvasJSChartM options={optionsM}
                     onRef={ref => this.chart = ref} />
-
-                  {/* <CustomLine apiResponse={apiResponse}/> */}
                 </Box>
               </div>
-
-
               <div class="col">
                 <Box
                   backgroundColor={"#156B998C"}
@@ -688,13 +465,10 @@ class VibPage extends Component {
                   <CanvasJSChartP options={optionsP}
                     onRef={ref => this.chart = ref} />
                 </Box>
-
               </div>
             </div>
             <br></br><br></br>
             <div class="row">
-              {/* <div class="col-3"> 
-            </div> */}
               <div class="col">
                 <Box
                   backgroundColor={"#156B998C"}
@@ -712,10 +486,7 @@ class VibPage extends Component {
                   <CanvasJSChartTemp options={optionstemp}
                     onRef={ref => this.chart = ref} />
                 </Box>
-
               </div>
-              {/* <div class="col-3"> 
-            </div> */}
             </div>
             <br></br><br></br>
           </header>

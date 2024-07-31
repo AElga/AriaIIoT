@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './style.css';
-import Verify from './Verify';
+
+// This is the first page of the platform. It serves as a login page that takes user data and
+// verifies in the backend that the inputs are valid credentials. Once the input is validated,
+// the user is rerouted to the 'Verify' class
 
 const Login = () => {
+    //set the useState
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [verificationCode, setVerificationCode] = useState("");
@@ -19,6 +23,7 @@ const Login = () => {
         setPassword("");
     }, []);
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrorMessage("");
@@ -31,8 +36,10 @@ const Login = () => {
         })
             .then(res => res.json())
             .then(data => {
+                //check to see if the backend accepts the credentials
                 if (data.success) {
                     setShowVerification(true);
+                    //move on to verify
                     window.location.replace("Verify")
                 } else {
                     setErrorMessage(data.message || "Authentication failed");
@@ -40,8 +47,6 @@ const Login = () => {
             })
             .catch(err => setErrorMessage("Fetch error: " + err));
     };
-
-    
 
     return (
         <div className='Login body1'>

@@ -6,6 +6,10 @@ import NavBar from '../NavBar';
 import CustomTempGauge from '../Components/CustomGauge';
 import VibPage from './VibPage';
 
+//This class acts as the home page for the platform. It includes three features:
+//  1. A carousel that displayes featured statistics from each page
+//  2. Alarms from the past 24 hours
+//  3. Description of the IIot Platform
 
 class Home extends Component {
   constructor(props) {
@@ -15,7 +19,6 @@ class Home extends Component {
   render() {
 
     return (
-
       <div className='Home'>
         <div class="myStyle">
           <NavBar></NavBar>
@@ -29,7 +32,6 @@ class Home extends Component {
           </div>
           <br></br><br></br><br></br>
           <div class="row">
-
             <div class="col">
               <Box
                 gridColumn="span 4"
@@ -63,13 +65,11 @@ class Home extends Component {
                     <span class="visually-hidden">Next</span>
                   </button>
                 </div>
-
               </Box>
               <br />
             </div>
             <div class="col">
               <Box
-
                 gridColumn="span 4"
                 display="flex"
                 alignItems="center"
@@ -79,17 +79,14 @@ class Home extends Component {
                 <Typography variant="h3" fontWeight="600" color={"#FFFFFF"}>
                   Past 24Hr Alarms
                 </Typography>
-
               </Box>
             </div>
-
           </div>
           <br /><br /><br />
           <div class="row">
             <div class="col-2"></div>
             <div class="col">
               <Box
-
                 gridColumn="span 4"
                 display="flex"
                 alignItems="center"
@@ -104,12 +101,10 @@ class Home extends Component {
                   <br></br>
                   <p>This platform holds our Industrial IoT (IIOT)</p>
                 </Typography>
-
               </Box>
             </div>
             <div class="col-2"></div>
           </div>
-
         </div>
       </div>
     );

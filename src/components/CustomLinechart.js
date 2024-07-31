@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import CanvasJSReact from '@canvasjs/react-charts';
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+//This class allows users to set a line chart and edit which data sets are visible from the UI
 
 const CustomLine = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +16,7 @@ const CustomLine = () => {
   const [showZ2, setShowZ2] = useState(false);
   const [showTemp2, setShowTemp2] = useState(false);
   const chart = useRef(null);
-  
+
   const [dms, setDms] = useState([]);
   const [dms2, setDms2] = useState([]);
   const [dts, setDts] = useState([]);
@@ -107,11 +109,10 @@ const CustomLine = () => {
     <div className="row">
       <div className="col">
         <Button variant='secondary' onClick={() => setShowModal(true)} style={{ marginLeft: '350px' }}>
-          <img src="https://cdn2.iconfinder.com/data/icons/user-interface-line-vol-3/52/configuration__settings__options__config-512.png" alt="User Icon" width="30" height="30" />
+          <img src="https://cdn2.iconfinder.com/data/icons/user-interface-line-vol-3/52/configuration__settings__options__config-512.png"
+            alt="User Icon" width="30" height="30" />
         </Button>
-
         <CanvasJSChart options={optionsM} onRef={ref => chart.current = ref} />
-
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Update Chart Display</Modal.Title>

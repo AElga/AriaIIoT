@@ -3,7 +3,13 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import ariaLogo from './Images/ariaLogo.png';
-import './Guage.css';
+import './Pages/Guage.css';
+
+//The NavBar from Bootstrap has three main functions:
+//  1. the NavLinks to each section of the platform
+//  2. a search bar (to be implemented)
+//  3. a user icon for logging out
+//This componenet is to be put at the top of every page except for the Login, Verify, and Signup pages
 
 const NavBar = () => {
   return (

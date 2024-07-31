@@ -10,11 +10,9 @@ def extract_topic(userdata):
             for obj in globals.allData:
                 if obj.get_topic() == entry[0]:
                     obj.set_dict(entry[1])
-                    #print(obj)
                     break
         else: 
             topicdata = TopicData(entry[0], entry[1])
-            #print(topicdata)
             globals.allData.append(topicdata)
 
 

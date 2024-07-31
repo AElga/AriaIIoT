@@ -4,12 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import GaugeComponent from 'react-gauge-component';
 
-const CustomAnalogGauge = ({ dta={value: '0', minv: '0', maxv: '360', arcs: [
-  { limit: 0, color: '#', showTick: true },
-                          { limit: 101, color: '#5BE12C', showTick: true },
-                          { limit: 256, color: '#F5CD19', showTick: true },
-                          { limit: 360, color: '#EA4228', showTick: true },
-] }}) => {
+//This class allows users to set a analog gauge and edit its ranges, colors, and tooltips from the UI
+
+const CustomAnalogGauge = ({ dta = {
+  value: '0', minv: '0', maxv: '360', arcs: [
+    { limit: 0, color: '#', showTick: true },
+    { limit: 101, color: '#5BE12C', showTick: true },
+    { limit: 256, color: '#F5CD19', showTick: true },
+    { limit: 360, color: '#EA4228', showTick: true },
+  ]
+} }) => {
   const [showModal, setShowModal] = useState(false);
   const [minValue, setMinValue] = useState(dta.minv);
   const [maxValue, setMaxValue] = useState(dta.maxv);
@@ -73,7 +77,8 @@ const CustomAnalogGauge = ({ dta={value: '0', minv: '0', maxv: '360', arcs: [
     <div className="row">
       <div className="col">
         <Button variant='secondary' onClick={handleButtonClick} style={{ marginTop: '15px', marginLeft: '320px' }}>
-          <img src="https://cdn2.iconfinder.com/data/icons/user-interface-line-vol-3/52/configuration__settings__options__config-512.png" alt="User Icon" width="30" height="30" />
+          <img src="https://cdn2.iconfinder.com/data/icons/user-interface-line-vol-3/52/configuration__settings__options__config-512.png" 
+          alt="User Icon" width="30" height="30" />
         </Button>
         <GaugeComponent
           arc={{

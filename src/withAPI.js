@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 
+//This file aims to generalize the backend calling function. To be implemented
+
 const withAPI = (WrappedComponent, apiUrl, socketUrl = 'http://localhost:5000') => {
   return class extends Component {
     constructor(props) {
